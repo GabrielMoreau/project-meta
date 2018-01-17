@@ -12,7 +12,9 @@ Description:
 
 OpenData Licence: [% licence %]
 
-If you use this open data in your work (research or other), please reference and cite the scientific article having this doi:[% doi %] in your bibliography ([% urldoi %]).
+[% IF doi %]
+If you use this open data in your work (research or other), please reference and cite the scientific article having this doi:[% doi %] in your bibliography[% IF urldoi %] ([% urldoi %])[% END %].
+[% END %]
 
 ----
 Automatically generated file by project-meta.
