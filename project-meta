@@ -1,0 +1,161 @@
+#!/usr/bin/env perl
+#
+# 2018/01/17 Gabriel Moreau
+
+use strict;
+use warnings;
+
+use File::Copy qw{copy};    
+use YAML::Syck;
+use Getopt::Long();
+use Cwd();
+
+my ($verbose);
+Getopt::Long::GetOptions(
+   'verbose' => \$verbose,
+   );
+
+
+my %CMD_DB = (
+   'help'            => \&cmd_help,
+   'version'         => \&cmd_version,
+   'check'           => \&cmd_check,
+   'make-link'       => \&cmd_make_link,
+   'make-author'     => \&cmd_make_author;
+   'make-licence'    => \&cmd_make_licence;
+   );
+
+################################################################
+# main program
+################################################################
+
+my $cmd = shift @ARGV || 'help';
+if (defined $CMD_DB{$cmd}) {
+   $CMD_DB{$cmd}->(@ARGV);
+   }
+else {
+   print {*STDERR} "project-meta: command $cmd not found\n\n";
+   $CMD_DB{'help'}->();
+   exit 1;
+   }
+
+exit;
+
+################################################################
+# subroutine
+################################################################
+
+################################################################
+# command
+################################################################
+
+sub cmd_help {
+   print <<END;
+NAME
+   $0 - action on project metadata
+
+SYNOPSIS
+   $0 [-verbose] check
+END
+   }
+
+################################################################
+
+sub cmd_version {
+   print "0.01\n";
+   }
+
+################################################################
+
+sub print_ok {
+   my ($key, $test) = @_;
+   
+   printf "%-35s : %s\n", $key, $test ? 'yes' : 'no';
+   }
+
+################################################################
+
+sub cmd_check {
+   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+
+   my $acronym     = $meta->{'project'}{'acronym'};
+   my $current_dir = "/fsnet/project/coriolis/2014/14CARR" ; # Cwd::getcwd();
+   my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
+
+   print_ok 'project/acronym',                  $acronym =~ m{\d\d\w[\w\d_]+};
+   print_ok 'public-dap/dap-folder',            $dap_folder ne '' and $dap_folder =~ m{^/};
+   print_ok 'dap-folder not match current_dir', $dap_folder !~ m{$current_dir};
+
+   #print YAML::Syck::Dump($meta);
+   }
+
+################################################################
+
+sub addfolder2list {
+   my ($folderdb, $folder) = @_;
+   
+   $folder =~ s{/[^/]+$}{};
+   $folderdb->{$folder}++;
+
+   addfolder2list($folderdb, $folder) if $folder =~ m{/};
+   }
+
+################################################################
+
+sub cmd_make_link {
+   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $acronym = $meta->{'project'}{'acronym'};
+   my $current_dir = "/fsnet/project/coriolis/2014/14CARR" ; # Cwd::getcwd();
+   my $dap_folder = $meta->{'public-dap'}{'dap-folder'};
+
+   # Create a list of the folder
+   my %folders;
+   for my $dataset (@{$meta->{'public-dap'}{'data-set'}}) {
+      addfolder2list(\%folders, $dataset);
+      }
+
+   print "chmod o+rX,o-w $current_dir\n";
+   for my $folder (sort keys %folders) {
+      print "chmod o+rX,o-w $current_dir/$folder\n";
+      print "mkdir -p $dap_folder/$acronym/$folder\n";
+      }
+
+   for my $dataset (@{$meta->{'public-dap'}{'data-set'}}) {
+      my $folder = $dataset =~ s{/[^/]+$}{}r;
+      print "ln --symbolic --target-directory $dap_folder/$acronym/$folder/ $current_dir/$dataset\n";
+
+   print "chmod -R o+rX,o-w $dap_folder/$acronym/\n";
+      }
+   }
+
+################################################################
+
+sub cmd_make_author {
+   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   }
+
+################################################################
+
+sub cmd_make_licence {
+   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+
+   my $current_dir = Cwd::getcwd();
+
+   if (-f "$current_dir/LICENCE.txt") {
+      print "Warning: LICENCE.txt already exists\n";
+      return;
+      }
+
+   my $licence = $meta->{'public-dap'}{'data-licence'};
+
+   if (not -f "/usr/share/project-meta/licence.d/$licence.txt") {
+      print "Error: licence $licence doesn't exists in project-meta database\n";
+      exit 1;
+      }
+
+   copy("/usr/share/project-meta/licence.d/$licence.txt", "$current_dir/LICENCE.txt")
+      or die "Error: licence copy failed - $!";
+   return;
+   }
+
+################################################################
