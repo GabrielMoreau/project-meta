@@ -147,8 +147,8 @@ sub cmd_make_author {
       # Test for manual or automatically generated file
       # Automatically generated file by project-meta
       my $automatic;
-      open my $fh,  '<', "$current_dir/AUTHORS.txt" or die $!;
-      for my $line <$fh> {
+      open my $fh, '<', "$current_dir/AUTHORS.txt" or die $!;
+      for my $line (<$fh>) {
          $line =~ m/Automatically generated .* project-meta/i and $automatic++;
          }
       close $fh;
