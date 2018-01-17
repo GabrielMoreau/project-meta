@@ -21,8 +21,8 @@ my %CMD_DB = (
    'version'         => \&cmd_version,
    'check'           => \&cmd_check,
    'make-link'       => \&cmd_make_link,
-   'make-author'     => \&cmd_make_author;
-   'make-licence'    => \&cmd_make_licence;
+   'make-author'     => \&cmd_make_author,
+   'make-licence'    => \&cmd_make_licence,
    );
 
 ################################################################
