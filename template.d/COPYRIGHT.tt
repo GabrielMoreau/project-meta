@@ -1,0 +1,18 @@
+Project title: [% title %]
+
+Short project name: [% acronym %]
+
+List of authors:
+[% FOREACH author IN authorlist %]
+ - [% author %]
+[% END %]
+
+Description:
+[% description %]
+
+OpenData Licence: [% licence %]
+
+In case of use this opendata, please reference this article doi:[% doi %] in your bibliography ([% urldoi %]).
+
+----
+Automatically generated file by project-meta.

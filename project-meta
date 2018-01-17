@@ -27,6 +27,7 @@ my %CMD_DB = (
    'make-link'       => \&cmd_make_link,
    'make-author'     => \&cmd_make_author,
    'make-licence'    => \&cmd_make_licence,
+   'make-copyright'  => \&cmd_make_copyright,
    );
 
 ################################################################
@@ -138,7 +139,6 @@ sub cmd_make_author {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
 
    my $current_dir = Cwd::getcwd();
-   my $template_author = '/usr/share/project-meta/template.d/AUTHORS.tt';
 
    my $acronym    = $meta->{'project'}{'acronym'};
    my $authors_list = $meta->{'project'}{'authors'};
@@ -198,6 +198,49 @@ sub cmd_make_licence {
 
    print "Info: LICENCE.txt file create\n";
    return;
+   }
+
+################################################################
+
+sub cmd_make_copyright {
+   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+
+   my $current_dir = Cwd::getcwd();
+
+   if (-f "$current_dir/COPYRIGHT.txt") {
+      # Test for manual or automatically generated file
+      # Automatically generated file by project-meta
+      my $automatic;
+      open my $fh, '<', "$current_dir/COPYRIGHT.txt" or die $!;
+      for my $line (<$fh>) {
+         $line =~ m/Automatically generated .* project-meta/i and $automatic++;
+         }
+      close $fh;
+
+      if (not $automatic) {
+         print "Warning: COPYRIGHT.txt already exists\n";
+         return;
+         }
+
+      print "Warning: update COPYRIGHT.txt\n";
+      }
+
+   my $tt = Template->new(INCLUDE_PATH => '/usr/share/project-meta/template.d');
+   my $msg_format = '';
+   $tt->process('COPYRIGHT.tt',
+      {
+         title       => $meta->{'project'}{'title'},
+         acronym     => $meta->{'project'}{'acronym'},
+         authorlist  => $meta->{'project'}{'authors'},
+         description => $meta->{'project'}{'short-description'},
+         licence     => $meta->{'public-dap'}{'data-licence'},
+         doi         => $meta->{'publication'}{'doi'},
+         urldoi      => $meta->{'publication'}{'url'},
+      }, \$msg_format) || die $tt->error;
+
+   open my $fh,  '>', "$current_dir/COPYRIGHT.txt" or die $!;
+   print $fh "$msg_format\n\n";
+   close $fh;
    }
 
 ################################################################
