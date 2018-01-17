@@ -1,0 +1,10 @@
+Project: [% acronym %]
+
+List of authors:
+[% FOREACH author IN authorlist %]
+ - [% author %]
+[% END %]
+
+
+File generated automatically by project-meta.
+   

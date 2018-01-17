@@ -9,6 +9,8 @@ use File::Copy qw{copy};
 use YAML::Syck;
 use Getopt::Long();
 use Cwd();
+use Template;
+
 
 my ($verbose);
 Getopt::Long::GetOptions(
@@ -79,7 +81,7 @@ sub cmd_check {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
 
    my $acronym     = $meta->{'project'}{'acronym'};
-   my $current_dir = "/fsnet/project/coriolis/2014/14CARR" ; # Cwd::getcwd();
+   my $current_dir = Cwd::getcwd();
    my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
 
    print_ok 'project/acronym',                  $acronym =~ m{\d\d\w[\w\d_]+};
@@ -105,7 +107,7 @@ sub addfolder2list {
 sub cmd_make_link {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
    my $acronym = $meta->{'project'}{'acronym'};
-   my $current_dir = "/fsnet/project/coriolis/2014/14CARR" ; # Cwd::getcwd();
+   my $current_dir = Cwd::getcwd();
    my $dap_folder = $meta->{'public-dap'}{'dap-folder'};
 
    # Create a list of the folder
@@ -132,6 +134,22 @@ sub cmd_make_link {
 
 sub cmd_make_author {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+
+   my $current_dir = Cwd::getcwd();
+   my $template_author = "/usr/share/project-meta/template.d/AUTHORS.tt';
+   
+   my $acronym    = $meta->{'project'}{'acronym'};
+   my $authors_list = $meta->{'project'}{'authors'};
+   
+   my $tt = Template->new(INCLUDE_PATH => '/usr/share/project-meta/template.d');
+   my $msg_format = '';
+   $tt->process('AUTHORS.tt',
+      {
+         acronym    => $acronym,
+         authorlist => $authors_list,
+      }, \$msg_format) || die $tt->error;
+
+   print "$msg_format\n\n";
    }
 
 ################################################################
@@ -155,6 +173,8 @@ sub cmd_make_licence {
 
    copy("/usr/share/project-meta/licence.d/$licence.txt", "$current_dir/LICENCE.txt")
       or die "Error: licence copy failed - $!";
+
+   print "Info: LICENCE.txt file create\n";
    return;
    }
 
