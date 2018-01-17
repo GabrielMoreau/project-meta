@@ -1,6 +1,6 @@
 DESTDIR=
 
-BINDIR=/usr/sbin
+BINDIR=/usr/bin
 MANDIR=/usr/share/man/man1
 SHAREDIR=/usr/share/project-meta
 ETCDIR=/etc/project-meta
