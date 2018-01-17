@@ -5,6 +5,5 @@ List of authors:
  - [% author %]
 [% END %]
 
-
-File generated automatically by project-meta.
-   
+----
+Automatically generated file by project-meta.
