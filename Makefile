@@ -18,11 +18,11 @@ update:
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)/licence.d
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)/template.d
-	#@install -d -m 0755 -o root -g root $(DESTDIR)/$(MANDIR)
+	@install -d -m 0755 -o root -g root $(DESTDIR)/$(MANDIR)
 
 	install    -m 0755 -o root -g root project-meta $(DESTDIR)/$(BINDIR)
 
-	#install    -m 0644 -o root -g root project-meta.1.gz $(DESTDIR)/$(MANDIR)
+	install    -m 0644 -o root -g root project-meta.1.gz $(DESTDIR)/$(MANDIR)
 
 	install    -m 0644 -o root -g root PROJECT-META.sample.yml $(DESTDIR)/$(SHAREDIR)
 	install    -m 0644 -o root -g root licence.d/*.txt $(DESTDIR)/$(SHAREDIR)/licence.d
