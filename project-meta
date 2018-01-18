@@ -311,6 +311,20 @@ The list of possible licence is given with the command L<list-licence>.
  project-meta list-licence
 
 Give the list of all the open data licence supported by the project-meta licence database.
+At this time the possible licence are:
+
+ license-ouverte-v2.0
+ open-database-license-v1.0
+
+
+=head1 METAFILE SPECIFICATION
+
+Each project must have an open data metafile which describe the project : C<PROJECT-META.yml>.
+The file is in YAML format because this is a human readable style of text file.
+
+You can find in the project-meta software a C<PROJECT-META.sample.yml> example.
+This one is actually the master reference specification!
+
 
 =head1 AUTHOR
 
