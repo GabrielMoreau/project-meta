@@ -56,12 +56,16 @@ exit;
 ################################################################
 
 sub cmd_help {
-   print <<END;
-NAME
-   $0 - action on project metadata
+   print <<'END';
+project-meta - opendata project metafile manager
 
-SYNOPSIS
-   $0 [-verbose] check
+ project-meta [-verbose] check
+ project-meta make-link
+ project-meta make-author
+ project-meta make-licence
+ project-meta make-copyright
+ project-meta make-licence
+ project-meta list-licence
 END
    }
 
@@ -260,3 +264,69 @@ sub cmd_list_licence {
       }
    closedir $dh;
    }
+
+################################################################
+# documentation
+################################################################
+
+__END__
+
+=head1 NAME
+
+project-meta - opendata project metafile manager
+
+
+=head1 USAGE
+
+ project-meta [-verbose] check
+ project-meta make-link
+ project-meta make-author
+ project-meta make-licence
+ project-meta make-copyright
+ project-meta make-licence
+ project-meta list-licence
+
+=head1 DESCRIPTION
+
+=head1 COMMANDS
+
+Some command are defined in the source code but are not documented here.
+Theses could be not well defined, not finished, not well tested...
+You can read the source code and use them at your own risk
+(like for all the Klask code).
+
+=head2 make-licence
+
+ project-meta make-licence
+
+Copy the licence file from the project-meta licence database at the current folder with the file name: LICENCE.txt.
+
+The licence is defined in the PROJECT-META.yml specification under the key C<public-dap/data-licence>.
+The list of possible licence is given with the command L<list-licence>.
+
+=head2 list-licence
+
+ project-meta list-licence
+
+Give the list of all the open data licence supported by the project-meta licence database.
+
+=head1 AUTHOR
+
+Written by Gabriel Moreau, Grenoble - France
+
+=head1 SPECIAL THANKS
+
+The list of people below did not directly contribute to project-meta's source code
+but provided me with some data, returned bugs
+or helped me in another small task like having new ideas ...
+Maybe I forgot your contribution in recent years,
+please forgive me in advance and send me an e-mail to correct this.
+
+Joel Sommeria, Julien Chauchat, Cyrille Bonamy.
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Licence GNU GPL version 2 or later and Perl equivalent
+
+Copyright (C) 2005-2018 Gabriel Moreau <Gabriel.Moreau(A)univ-grenoble-alpes.fr>.
