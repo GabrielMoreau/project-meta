@@ -288,6 +288,8 @@ project-meta - opendata project metafile manager
 
 =head1 DESCRIPTION
 
+project-meta is a small tool to maintain a set of open data files.
+
 =head1 COMMANDS
 
 Some command are defined in the source code but are not documented here.
