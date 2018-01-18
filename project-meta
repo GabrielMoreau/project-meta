@@ -28,6 +28,7 @@ my %CMD_DB = (
    'make-author'     => \&cmd_make_author,
    'make-licence'    => \&cmd_make_licence,
    'make-copyright'  => \&cmd_make_copyright,
+   'list-licence'    => \&cmd_list_licence,
    );
 
 ################################################################
@@ -244,3 +245,12 @@ sub cmd_make_copyright {
    }
 
 ################################################################
+
+sub cmd_list_licence {
+   opendir my $dh, '/usr/share/project-meta/licence.d/' or die $!;
+   for my $licence (readdir $dh) {
+      # next if not -t $licence;
+      print "$licence\n";
+      }
+   closedir $dh;
+   }
