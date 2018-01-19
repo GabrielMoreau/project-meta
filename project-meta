@@ -166,7 +166,6 @@ sub cmd_make_zip {
    my $current_dir = Cwd::getcwd();
    my $data_set    = $meta->{'public-dap'}{'data-set'};
    my $acronym     = $meta->{'project'}{'acronym'};
-   my $time = time;
 
    push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENCE.txt';
    {
@@ -195,8 +194,13 @@ sub cmd_make_zip {
          }
       }
 
+   my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = time;
+   $year += 1900;
+   $mon++;
+   my $date = sprintf '%04i%02i%02i-%02i%02i', $year, $mon, $mday, $hour, $min;
+
    # Save the Zip file
-   unless ($zip->writeToFileNamed("$current_dir/$acronym-$time.zip") == AZ_OK) {
+   unless ($zip->writeToFileNamed("$current_dir/$acronym--$date.zip") == AZ_OK) {
       die 'Error: zip write error';
       }
    }
