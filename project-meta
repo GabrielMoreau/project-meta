@@ -120,6 +120,13 @@ sub cmd_make_link {
    my $current_dir = Cwd::getcwd();
    my $dap_folder = $meta->{'public-dap'}{'dap-folder'};
 
+   push @{$dap_folder}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENCE.txt';
+   {
+      # Remove doublon
+      my %seen = ();
+      @{$dap_folder} = grep { ! $seen{$_}++ } @{$dap_folder};
+      }
+
    # Create a list of the folder
    my %folders;
    for my $dataset (@{$meta->{'public-dap'}{'data-set'}}) {
