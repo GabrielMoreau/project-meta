@@ -105,9 +105,11 @@ sub addfolder2list {
    my ($folderdb, $folder) = @_;
    
    $folder =~ s{/[^/]+$}{};
-   $folderdb->{$folder}++;
+   
+   return if $folder !~ m{/};
 
-   addfolder2list($folderdb, $folder) if $folder =~ m{/};
+   $folderdb->{$folder}++;
+   return addfolder2list($folderdb, $folder);
    }
 
 ################################################################
@@ -141,8 +143,8 @@ sub cmd_make_link {
          print "ln --symbolic --target-directory $dap_folder/$acronym/ $current_dir/$dataset\n";
          }
 
-   print "chmod -R o+rX,o-w $dap_folder/$acronym/\n";
       }
+   print "chmod -R o+rX,o-w $dap_folder/$acronym/\n";
    }
 
 ################################################################
@@ -236,7 +238,7 @@ sub cmd_make_copyright {
 
       print "Warning: update COPYRIGHT.txt\n";
       }
-
+   
    my $tt = Template->new(INCLUDE_PATH => '/usr/share/project-meta/template.d');
    my $msg_format = '';
    $tt->process('COPYRIGHT.tt',
@@ -247,7 +249,6 @@ sub cmd_make_copyright {
          description => $meta->{'project'}{'short-description'},
          licence     => $meta->{'public-dap'}{'data-licence'},
          doi         => $meta->{'publication'}{'doi'},
-         urldoi      => $meta->{'publication'}{'url'},
       }, \$msg_format) || die $tt->error;
 
    open my $fh,  '>', "$current_dir/COPYRIGHT.txt" or die $!;
@@ -340,6 +341,12 @@ The file is in YAML format because this is a human readable style of text file.
 You can find in the project-meta software a C<PROJECT-META.sample.yml> example.
 This one is actually the master reference specification!
 
+
+=head1 BUG
+
+ - make-link: folder/folder
+ - make-link: support multiple doi
+ - metafile: remove prop publication/url
 
 =head1 SEE ALSO
 
