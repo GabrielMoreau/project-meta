@@ -127,6 +127,7 @@ sub cmd_make_link {
       }
 
    print "chmod o+rX,o-w $current_dir\n";
+   print "mkdir -p $dap_folder/$acronym\n" if not -d "$dap_folder/$acronym";
    for my $folder (sort keys %folders) {
       print "chmod o+rX,o-w $current_dir/$folder\n";
       print "mkdir -p $dap_folder/$acronym/$folder\n" if -d "$current_dir/$folder";
