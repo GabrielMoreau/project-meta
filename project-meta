@@ -182,11 +182,11 @@ sub cmd_make_zip {
    for my $dataset (@{$data_set}) {
       if (-d $dataset) {
          # Folder case
-         $zip->addTree($dataset, "$dataset");
+         $zip->addTree($dataset, "$acronym/$dataset");
          }
       elsif (-f $dataset) {
          # File case
-         $zip->addFile($dataset);
+         $zip->addFile(filename => $dataset, zipName => "$acronym/$dataset");
          }
       else {
          # Strange case
