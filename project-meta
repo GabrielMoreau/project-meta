@@ -116,20 +116,21 @@ sub addfolder2list {
 
 sub cmd_make_link {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
-   my $acronym = $meta->{'project'}{'acronym'};
    my $current_dir = Cwd::getcwd();
-   my $dap_folder = $meta->{'public-dap'}{'dap-folder'};
+   my $acronym     = $meta->{'project'}{'acronym'};
+   my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
+   my $data_set    = $meta->{'public-dap'}{'data-set'};
 
-   push @{$dap_folder}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENCE.txt';
+   push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENCE.txt';
    {
       # Remove doublon
       my %seen = ();
-      @{$dap_folder} = grep { ! $seen{$_}++ } @{$dap_folder};
+      @{$data_set} = grep { ! $seen{$_}++ } @{$data_set};
       }
 
    # Create a list of the folder
    my %folders;
-   for my $dataset (@{$meta->{'public-dap'}{'data-set'}}) {
+   for my $dataset (@{$data_set}) {
       addfolder2list(\%folders, $dataset);
       }
 
@@ -140,7 +141,7 @@ sub cmd_make_link {
       print "mkdir -p $dap_folder/$acronym/$folder\n" if -d "$current_dir/$folder";
       }
 
-   for my $dataset (@{$meta->{'public-dap'}{'data-set'}}) {
+   for my $dataset (@{$data_set}) {
       if ($dataset =~ m{/}) {
          # Folder case
          my $folder = $dataset =~ s{/[^/]+$}{}r;
