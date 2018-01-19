@@ -59,6 +59,8 @@ sub cmd_help {
    print <<'END';
 project-meta - opendata project metafile manager
 
+ project-meta help
+ project-meta version
  project-meta check
  project-meta make-link
  project-meta make-author
@@ -72,7 +74,7 @@ END
 ################################################################
 
 sub cmd_version {
-   print "0.01\n";
+   print "0.0.2\n";
    }
 
 ################################################################
@@ -298,6 +300,8 @@ project-meta - opendata project metafile manager
 
 =head1 USAGE
 
+ project-meta help
+ project-meta version
  project-meta check
  project-meta make-link
  project-meta make-author
