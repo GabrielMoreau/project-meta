@@ -194,7 +194,7 @@ sub cmd_make_zip {
          }
       }
 
-   my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = time;
+   my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime time;
    $year += 1900;
    $mon++;
    my $date = sprintf '%04i%02i%02i-%02i%02i', $year, $mon, $mday, $hour, $min;
