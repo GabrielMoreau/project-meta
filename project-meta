@@ -25,6 +25,7 @@ my %CMD_DB = (
    'version'         => \&cmd_version,
    'check'           => \&cmd_check,
    'make-link'       => \&cmd_make_link,
+   'make-zip'        => \&cmd_make_zip,
    'make-author'     => \&cmd_make_author,
    'make-licence'    => \&cmd_make_licence,
    'make-copyright'  => \&cmd_make_copyright,
@@ -156,6 +157,48 @@ sub cmd_make_link {
 
       }
    print "chmod -R o+rX,o-w $dap_folder/$acronym/\n";
+   }
+
+################################################################
+
+sub cmd_make_zip {
+   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $current_dir = Cwd::getcwd();
+   my $data_set    = $meta->{'public-dap'}{'data-set'};
+   my $acronym     = $meta->{'project'}{'acronym'};
+   my $time = time;
+
+   push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENCE.txt';
+   {
+      # Remove doublon
+      my %seen = ();
+      @{$data_set} = grep { ! $seen{$_}++ } @{$data_set};
+      }
+
+   # Create a Zip file
+   use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
+
+   my $zip = Archive::Zip->new();
+
+   for my $dataset (@{$data_set}) {
+      if (-d $dataset) {
+         # Folder case
+         $zip->addDirectory($dataset);
+         }
+      elsif (-f $dataset) {
+         # File case
+         $zip->addFile($dataset);
+         }
+      else {
+         # Strange cas
+         print "Error: entry $dataset doesn't exists\n";
+         }
+      }
+
+   # Save the Zip file
+   unless ($zip->writeToFileNamed("$current_dir/$acronym-$time.zip") == AZ_OK) {
+      die 'Error: zip write error';
+      }
    }
 
 ################################################################
