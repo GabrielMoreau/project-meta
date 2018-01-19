@@ -13,7 +13,15 @@ Description:
 OpenData Licence: [% licence %]
 
 [% IF doi %]
-If you use this open data in your work (research or other), please reference and cite the scientific article having this doi:[% doi %] in your bibliography[% IF urldoi %] ([% urldoi %])[% END %].
+If you use this open data in your work (research or other),
+[% TRY %]
+please cite in your bibliography the relevant reference amongst the following list of doi:
+[% FOREACH item IN doi %]
+ - doi:[% item %]
+[% END %]
+[% CATCH %]
+please cite in your bibliography the following reference doi:[% doi %]
+[% END %]
 [% END %]
 
 ----
