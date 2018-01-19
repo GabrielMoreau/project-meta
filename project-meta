@@ -248,7 +248,10 @@ sub cmd_make_copyright {
       print "Warning: update COPYRIGHT.txt\n";
       }
    
-   my $tt = Template->new(INCLUDE_PATH => '/usr/share/project-meta/template.d');
+   my $tt = Template->new(
+      INCLUDE_PATH   => '/usr/share/project-meta/template.d',
+      POST_CHOMP     => 1, # Remove space and carriage return after %]
+      );
    my $msg_format = '';
    $tt->process('COPYRIGHT.tt',
       {
