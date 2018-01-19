@@ -7,22 +7,16 @@ List of authors:
  - [% author %]
 [% END %]
 
-Description:
+Description
+-----------
+
 [% description %]
 
 OpenData Licence: [% licence %]
 
-[% IF doi %]
-If you use this open data in your work (research or other),
-[% TRY %]
-please cite in your bibliography the relevant reference amongst the following list of doi:
-[% FOREACH item IN doi %]
- - doi:[% item %]
-[% END %]
-[% CATCH %]
-please cite in your bibliography the following reference doi:[% doi %]
-[% END %]
-[% END %]
+[% IF doi %][% IF doi.size > 1 %]If you use this open data in your work (research or other), please cite in your bibliography the relevant reference amongst the following list of doi:[% FOREACH item IN doi %]
+ - doi:[% item %][% END %]
+[% ELSE %]If you use this open data in your work (research or other), please cite in your bibliography the following reference doi:[% doi %][% END %][% END %]
 
 ----
 Automatically generated file by project-meta.
