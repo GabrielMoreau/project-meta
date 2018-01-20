@@ -186,7 +186,7 @@ sub cmd_make_zip {
          }
       elsif (-f $dataset) {
          # File case
-         $zip->addFile(filename => $dataset, zipName => "$acronym/$dataset");
+         $zip->addFile($dataset, "$acronym/$dataset");
          }
       else {
          # Strange case
