@@ -1,0 +1,9 @@
+open https://servforge.legi.grenoble-inp.fr/pub/soft-trokata/
+
+mkdir project-meta
+cd project-meta
+mput *.html
+mput PROJECT-META.sample.yml
+mput LICENCE.txt
+
+quit
