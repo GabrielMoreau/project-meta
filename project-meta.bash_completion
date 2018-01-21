@@ -1,0 +1,18 @@
+# bash completion for project-meta
+
+_project-meta() {
+   local cur prev
+
+   COMPREPLY=()
+   #_get_comp_words_by_ref cur prev
+   cur="${COMP_WORDS[COMP_CWORD]}"
+   prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+   if [[ "$cur" == '-*' || $COMP_CWORD -gt 1 ]]
+   then
+      COMPREPLY=($(compgen -W "$(project-meta  help|grep "^ project-meta ${COMP_WORDS[1]}" | sed -e 's/[\[]/\n/g;'|grep -- '^-'|cut -f 1 -d ']'|cut -f 1 -d ' '|sed -e 's/|/ /g;'|xargs echo -n)" -- "$cur"))
+   else
+      COMPREPLY=($(compgen -W "$($(which project-meta || echo /usr/bin/project-meta) help|grep '^ project-meta'|awk '{print $2}'|xargs echo -n)" -- "$cur"))
+   fi
+
+   } && complete -F _project-meta project-meta

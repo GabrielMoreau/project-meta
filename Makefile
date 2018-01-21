@@ -19,6 +19,7 @@ update:
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)/licence.d
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)/template.d
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(MANDIR)
+	@install -d -m 0755 -o root -g root $(DESTDIR)/$(COMPDIR)
 
 	install    -m 0755 -o root -g root project-meta $(DESTDIR)/$(BINDIR)
 
@@ -28,8 +29,7 @@ update:
 	install    -m 0644 -o root -g root licence.d/*.txt $(DESTDIR)/$(SHAREDIR)/licence.d
 	install    -m 0644 -o root -g root template.d/*.tt $(DESTDIR)/$(SHAREDIR)/template.d
 
-	#@install -d -m 0755 -o root -g root $(DESTDIR)/$(COMPDIR)
-	#install    -m 0644 -o root -g root project-meta.bash_completion $(DESTDIR)/$(COMPDIR)/project-meta
+	install    -m 0644 -o root -g root project-meta.bash_completion $(DESTDIR)/$(COMPDIR)/project-meta
 
 sync:
 	svn update
