@@ -473,6 +473,20 @@ At this time the possible licence are:
 Note that these licences are dedicated to open data.
 Please do not use open licence that have been written for code or documentation for data.
 
+=head2 make-author
+
+ project-meta make-author
+
+Create or update the F<AUTHORS.txt> file at the current folder.
+Authors data are extracted from the C<PROJECT-META.yml> file.
+
+=head2 make-copyright
+
+ project-meta make-copyright
+
+Create or update the F<COPYRIGHT.txt> file at the current folder.
+Authors, licence and copyright data are extracted from the C<PROJECT-META.yml> file.
+
 
 =head1 METAFILE SPECIFICATION
 
