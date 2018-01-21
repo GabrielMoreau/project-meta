@@ -29,9 +29,9 @@ project:
   url-doc: http://servforge.legi.grenoble-inp.fr/projects/pj-coriolis-14carr
 
 publication:
-  doi: 10.1007/s10652-017-9523-2
+  doi:
+    - 10.1007/s10652-017-9523-2
 
-  url: https://doi.org/10.1007/s10652-017-9523-2
 
 public-dap:
   data-licence: license-ouverte-v2.0 
