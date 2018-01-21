@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# 2018/01/17 Gabriel Moreau
+# 2018/01/17 Gabriel Moreau <Gabriel.Moreau(A)univ-grenoble-alpes.fr>
 #
 # apt-get install yamllint libyaml-syck-perl libtemplate-perl libarchive-zip-perl
 
@@ -12,6 +12,7 @@ use YAML::Syck;
 use Getopt::Long();
 use Cwd();
 use Template;
+use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 
 
 my ($verbose);
@@ -52,6 +53,25 @@ exit;
 # subroutine
 ################################################################
 
+sub print_ok {
+   my ($key, $test) = @_;
+   
+   printf "%-35s : %s\n", $key, $test ? 'yes' : 'no';
+   }
+
+################################################################
+
+sub addfolder2list {
+   my ($folderdb, $folder) = @_;
+   
+   $folder =~ s{/[^/]+$}{};
+   
+   return if $folder !~ m{/};
+
+   $folderdb->{$folder}++;
+   return addfolder2list($folderdb, $folder);
+   }
+
 ################################################################
 # command
 ################################################################
@@ -81,14 +101,6 @@ sub cmd_version {
 
 ################################################################
 
-sub print_ok {
-   my ($key, $test) = @_;
-   
-   printf "%-35s : %s\n", $key, $test ? 'yes' : 'no';
-   }
-
-################################################################
-
 sub cmd_check {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
 
@@ -101,19 +113,6 @@ sub cmd_check {
    print_ok 'dap-folder not match current_dir', $dap_folder !~ m{$current_dir};
 
    #print YAML::Syck::Dump($meta);
-   }
-
-################################################################
-
-sub addfolder2list {
-   my ($folderdb, $folder) = @_;
-   
-   $folder =~ s{/[^/]+$}{};
-   
-   return if $folder !~ m{/};
-
-   $folderdb->{$folder}++;
-   return addfolder2list($folderdb, $folder);
    }
 
 ################################################################
@@ -176,8 +175,6 @@ sub cmd_make_zip {
       }
 
    # Create a Zip file
-   use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
-
    my $zip = Archive::Zip->new();
 
    for my $dataset (@{$data_set}) {
@@ -361,20 +358,20 @@ project-meta - opendata project metafile manager
 
 =head1 DESCRIPTION
 
-C<project-meta> is a small tool to maintain a set of open data files.
-In order to help you in this task, C<project-meta> has a set of subcommand
-to generated and maintain many files.
+Project-Meta is a small tool to maintain a set of open data files.
+In order to help you in this task, C<project-meta> command has a set of action
+to generated and maintain many files in your dataset.
 
 Everything is declare in the metafile F<PROJECT-META.yml>.
 This YAML file must exist in your root projet folder.
-See L<METAFILE SPECIFICATION>.
+See L</METAFILE SPECIFICATION>.
 
 =head1 COMMANDS
 
 Some command are defined in the source code but are not documented here.
 Theses could be not well defined, not finished, not well tested...
 You can read the source code and use them at your own risk
-(like for all the Klask code).
+(like for all the Project-Meta code).
 
 =head2 check
 
@@ -391,7 +388,7 @@ you can use C<yamllint> command to check just it's format.
 Copy the licence file from the project-meta licence database at the current folder with the file name: LICENCE.txt.
 
 The licence is defined in the PROJECT-META.yml specification under the key C<public-dap/data-licence>.
-The list of possible licence is given with the command L<list-licence>.
+The list of possible licence is given with the command L</list-licence>.
 
 =head2 list-licence
 
@@ -416,11 +413,9 @@ You can find in the project-meta software a C<PROJECT-META.sample.yml> example.
 This one is actually the master reference specification!
 
 
-=head1 BUG
+=head1 KNOWN BUGS
 
- - make-link: folder/folder
- - make-link: support multiple doi
- - metafile: remove prop publication/url
+ - not really check keys and tags before doing action!
 
 =head1 SEE ALSO
 
@@ -435,7 +430,7 @@ Written by Gabriel Moreau, LEGI UMR5519, CNRS, Grenoble - France
 
 The list of people below did not directly contribute to project-meta's source code
 but provided me with some data, returned bugs
-or helped me in another small task like having new ideas ...
+or helped me in another small task like having new ideas, specifications...
 Maybe I forgot your contribution in recent years,
 please forgive me in advance and send me an e-mail to correct this.
 
