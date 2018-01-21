@@ -64,6 +64,7 @@ project-meta - opendata project metafile manager
  project-meta version
  project-meta check
  project-meta make-link
+ project-meta make-zip
  project-meta make-author
  project-meta make-licence
  project-meta make-copyright
@@ -351,6 +352,7 @@ project-meta - opendata project metafile manager
  project-meta version
  project-meta check
  project-meta make-link
+ project-meta make-zip
  project-meta make-author
  project-meta make-licence
  project-meta make-copyright
@@ -359,7 +361,13 @@ project-meta - opendata project metafile manager
 
 =head1 DESCRIPTION
 
-project-meta is a small tool to maintain a set of open data files.
+C<project-meta> is a small tool to maintain a set of open data files.
+In order to help you in this task, C<project-meta> has a set of subcommand
+to generated and maintain many files.
+
+Everything is declare in the metafile F<PROJECT-META.yml>.
+This YAML file must exist in your root projet folder.
+See L<METAFILE SPECIFICATION>.
 
 =head1 COMMANDS
 
@@ -394,6 +402,9 @@ At this time the possible licence are:
 
  license-ouverte-v2.0
  open-database-license-v1.0
+
+Note that these licences are dedicated to open data.
+Please do not use open licence that have been written for code or documentation for data.
 
 
 =head1 METAFILE SPECIFICATION
