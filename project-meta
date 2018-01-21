@@ -391,8 +391,26 @@ The main keys use in the F<PROJECT-META.yml> are:
 
 =over
 
-=item * C<project/acronym>: the project short acronym
-=item * C<public-dap/dap-folder>: the OpeNDAP folder
+=item * C<project/acronym>: the project short acronym, add to the OpeNDAP root folder
+
+=item * C<public-dap/dap-folder>: the OpeNDAP root folder
+
+=item * C<public-dap/data-set>: a list of files or folder to push
+
+=back
+
+=head2 make-zip
+
+ project-meta make-zip
+
+Create a ZIP archive with the open data set.
+Files F<AUTHORS.txt>, F<LICENCE.txt> and F<COPYRIGHT.txt> are mandatory but could be generated (see below).
+The main keys use in the F<PROJECT-META.yml> are:
+
+=over
+
+=item * C<project/acronym>: the project short acronym, use as root folder
+
 =item * C<public-dap/data-set>: a list of files or folder to push
 
 =back
