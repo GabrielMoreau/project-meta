@@ -381,13 +381,30 @@ Check your F<PROJECT-META.yml> has the good key.
 If your metafile is not a valid YAML file,
 you can use C<yamllint> command to check just it's format.
 
+=head2 make-link
+
+ project-meta make-link
+
+Create UNIX soft links on the OpeNDAP folder to the real data.
+Files F<AUTHORS.txt>, F<LICENCE.txt> and F<COPYRIGHT.txt> are mandatory but could be generated (see below).
+The main keys use in the F<PROJECT-META.yml> are:
+
+=over
+
+=item * C<project/acronym>: the project short acronym
+=item * C<public-dap/dap-folder>: the OpeNDAP folder
+=item * C<public-dap/data-set>: a list of files or folder to push
+
+=back
+
 =head2 make-licence
 
  project-meta make-licence
 
-Copy the licence file from the project-meta licence database at the current folder with the file name: LICENCE.txt.
+Copy the licence file from the project-meta licence database at the current folder
+with the file name: F<LICENCE.txt>.
 
-The licence is defined in the PROJECT-META.yml specification under the key C<public-dap/data-licence>.
+The licence is defined in the F<PROJECT-META.yml> specification under the key C<public-dap/data-licence>.
 The list of possible licence is given with the command L</list-licence>.
 
 =head2 list-licence
@@ -430,7 +447,7 @@ Written by Gabriel Moreau, LEGI UMR5519, CNRS, Grenoble - France
 
 The list of people below did not directly contribute to project-meta's source code
 but provided me with some data, returned bugs
-or helped me in another small task like having new ideas, specifications...
+or helped me in another task like having new ideas, specifications...
 Maybe I forgot your contribution in recent years,
 please forgive me in advance and send me an e-mail to correct this.
 
