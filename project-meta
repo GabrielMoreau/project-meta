@@ -26,6 +26,7 @@ my %CMD_DB = (
    'version'         => \&cmd_version,
    'check'           => \&cmd_check,
    'make-link'       => \&cmd_make_link,
+   'remove-link'     => \&cmd_remove_link
    'make-zip'        => \&cmd_make_zip,
    'make-author'     => \&cmd_make_author,
    'make-licence'    => \&cmd_make_licence,
@@ -84,6 +85,7 @@ project-meta - opendata project metafile manager
  project-meta version
  project-meta check
  project-meta make-link
+ project-meta remove-link
  project-meta make-zip
  project-meta make-author
  project-meta make-licence
@@ -108,7 +110,7 @@ sub cmd_check {
    my $current_dir = Cwd::getcwd();
    my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
 
-   print_ok 'project/acronym',                  $acronym =~ m{\d\d\w[\w\d_]+};
+   print_ok 'project/acronym',                  $acronym =~ m{\d\d\w[\w\d_/]+};
    print_ok 'public-dap/dap-folder',            $dap_folder ne '' and $dap_folder =~ m{^/};
    print_ok 'dap-folder not match current_dir', $dap_folder !~ m{$current_dir};
 
@@ -157,6 +159,20 @@ sub cmd_make_link {
 
       }
    print "chmod -R o+rX,o-w '$dap_folder/$acronym/'\n";
+   }
+
+################################################################
+
+sub cmd_remove_link {
+   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $current_dir = Cwd::getcwd();
+   my $acronym     = $meta->{'project'}{'acronym'};
+   my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
+
+   die "Error: DAP folder match current folder" if $dap_folder =~ m{$current_dir} or $current_dir =~ m{$dap_folder};
+
+   print "find '$dap_folder/$acronym/' -type l -o -type d\n";
+   print "find '$dap_folder/$acronym/' -type l -o -type d -delete\n";
    }
 
 ################################################################
@@ -349,6 +365,7 @@ project-meta - opendata project metafile manager
  project-meta version
  project-meta check
  project-meta make-link
+ project-meta remove-link
  project-meta make-zip
  project-meta make-author
  project-meta make-licence
@@ -398,6 +415,23 @@ The main keys use in the F<PROJECT-META.yml> are:
 =item * C<public-dap/data-set>: a list of files or folder to push
 
 =back
+
+Because this command could be dangerous, it does nothing!
+It print on terminal shell command to be done.
+You have to verify ouput before eval it.
+
+ project-meta make-link
+ project-meta make-link | bash
+
+=head2 remove-link
+
+ project-meta remove-link
+
+Remove link in OpeNDAP folder for that projet.
+Because command C<rm> is always dangerous,
+we use here the command C<find> limited to folder and link.
+
+Please verify the returned values before excuted it with the C<-delete> option.
 
 =head2 make-zip
 
