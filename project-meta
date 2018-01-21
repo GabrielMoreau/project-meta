@@ -171,8 +171,9 @@ sub cmd_remove_link {
 
    die "Error: DAP folder match current folder" if $dap_folder =~ m{$current_dir} or $current_dir =~ m{$dap_folder};
 
-   print "find '$dap_folder/$acronym/' -type l -o -type d\n";
-   print "find '$dap_folder/$acronym/' -type l -o -type d -delete\n";
+   print "find '$dap_folder/$acronym/' -type l -o -type d -exec ls -l {} \+\n";
+   print "find '$dap_folder/$acronym/' -type l -delete\n";
+   print "find '$dap_folder/$acronym/' -type d -delete\n";
    }
 
 ################################################################
