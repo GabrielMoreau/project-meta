@@ -66,9 +66,9 @@ sub print_ok {
 sub addfolder2list {
    my ($folderdb, $folder) = @_;
    
-   $folder =~ s{/[^/]+$}{};
-   
    return if $folder !~ m{/};
+   
+   $folder =~ s{/[^/]+$}{};
 
    $folderdb->{$folder}++;
    return addfolder2list($folderdb, $folder);
@@ -144,17 +144,18 @@ sub cmd_make_link {
    print "mkdir -p '$dap_folder/$acronym'\n" if not -d "$dap_folder/$acronym";
    for my $folder (sort keys %folders) {
       print "chmod o+rX,o-w '$current_dir/$folder'\n";
-      print "mkdir -p '$dap_folder/$acronym/$folder'\n" if -d "$current_dir/$folder";
+      print "mkdir '$dap_folder/$acronym/$folder'\n" if -d "$current_dir/$folder";
       }
 
    for my $dataset (@{$data_set}) {
       if ($dataset =~ m{/}) {
-         # Folder case
+         # sub-folder case
          my $folder = $dataset =~ s{/[^/]+$}{}r;
+         print "chmod -R o+rX,o-w '$current_dir/$dataset'\n";
          print "ln --symbolic --target-directory '$dap_folder/$acronym/$folder/' '$current_dir/$dataset'\n";
          }
       else {
-         # File case
+         # Root case
          print "ln --symbolic --target-directory '$dap_folder/$acronym/' '$current_dir/$dataset'\n";
          }
 
