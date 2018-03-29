@@ -6,7 +6,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.0.3');
+use version; our $VERSION = version->declare('0.0.5');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
