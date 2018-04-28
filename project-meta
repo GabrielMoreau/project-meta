@@ -2,11 +2,12 @@
 #
 # 2018/01/17 Gabriel Moreau <Gabriel.Moreau(A)univ-grenoble-alpes.fr>
 #
-# apt-get install yamllint libyaml-syck-perl libtemplate-perl libarchive-zip-perl
+# apt-get install libyaml-syck-perl libtemplate-perl libarchive-zip-perl
+# apt-get install yamllint libyaml-shell-perl # check YAML files
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.0.5');
+use version; our $VERSION = version->declare('0.0.6');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -88,11 +89,10 @@ project-meta - opendata project metafile manager
  project-meta make-link
  project-meta remove-link
  project-meta make-zip
- project-meta make-author
- project-meta make-licence
- project-meta make-copyright
- project-meta make-licence
  project-meta list-licence
+ project-meta make-licence
+ project-meta make-author
+ project-meta make-copyright
 END
    }
 
@@ -370,11 +370,11 @@ project-meta - opendata project metafile manager
  project-meta make-link
  project-meta remove-link
  project-meta make-zip
- project-meta make-author
- project-meta make-licence
- project-meta make-copyright
- project-meta make-licence
  project-meta list-licence
+ project-meta make-licence
+ project-meta make-author
+ project-meta make-copyright
+
 
 =head1 DESCRIPTION
 
@@ -385,6 +385,7 @@ to generated and maintain many files in your dataset.
 Everything is declare in the metafile F<PROJECT-META.yml>.
 This YAML file must exist in your root projet folder.
 See L</METAFILE SPECIFICATION>.
+
 
 =head1 COMMANDS
 
@@ -399,7 +400,7 @@ You can read the source code and use them at your own risk
 
 Check your F<PROJECT-META.yml> has the good key.
 If your metafile is not a valid YAML file,
-you can use C<yamllint> command to check just it's format.
+you can use C<yamllint> or C<ysh> commands to check just it's format.
 
 =head2 make-link
 
@@ -452,16 +453,6 @@ The main keys use in the F<PROJECT-META.yml> are:
 
 =back
 
-=head2 make-licence
-
- project-meta make-licence
-
-Copy the licence file from the project-meta licence database at the current folder
-with the file name: F<LICENCE.txt>.
-
-The licence is defined in the F<PROJECT-META.yml> specification under the key C<public-dap/data-licence>.
-The list of possible licence is given with the command L</list-licence>.
-
 =head2 list-licence
 
  project-meta list-licence
@@ -474,6 +465,16 @@ At this time the possible licence are:
 
 Note that these licences are dedicated to open data.
 Please do not use open licence that have been written for code or documentation for data.
+
+=head2 make-licence
+
+ project-meta make-licence
+
+Copy the licence file from the project-meta licence database at the current folder
+with the file name: F<LICENCE.txt>.
+
+The licence is defined in the F<PROJECT-META.yml> specification under the key C<public-dap/data-licence>.
+The list of possible licence is given with the command L</list-licence>.
 
 =head2 make-author
 
@@ -503,14 +504,26 @@ This one is actually the master reference specification!
 
  - not really check keys and tags before doing action!
 
+
 =head1 SEE ALSO
 
-yamllint
+yamllint(1), ysh(1)
+
+In Debian, package for C<yamllint> and C<ysh> are
+
+=over
+
+=item * C<yamllint> - Linter for YAML files (Python)
+
+=item * C<libyaml-shell-perl> - YAML test shell (Perl)
+
+=back
 
 
 =head1 AUTHOR
 
 Written by Gabriel Moreau, LEGI UMR5519, CNRS, Grenoble - France
+
 
 =head1 SPECIAL THANKS
 
