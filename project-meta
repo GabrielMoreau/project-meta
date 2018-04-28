@@ -460,7 +460,8 @@ The main keys use in the F<PROJECT-META.yml> are:
 Give the list of all the open data license supported by the project-meta license database.
 At this time the possible license are:
 
- license-ouverte-v2.0
+ creative-common-zero-v1.0
+ licence-ouverte-v2.0
  open-database-license-v1.0
 
 Note that these licenses are dedicated to open data.
