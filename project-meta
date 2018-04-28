@@ -457,12 +457,18 @@ The main keys use in the F<PROJECT-META.yml> are:
 
  project-meta list-license
 
-Give the list of all the open data license supported by the project-meta license database.
-At this time the possible license are:
+Give the list of all the open data licenses supported by the project-meta license database.
+At this time the possible licenses are:
 
- creative-common-zero-v1.0
- licence-ouverte-v2.0
- open-database-license-v1.0
+=over
+
+=item * L<creative-common-zero-v1.0|https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt> (like public domain)
+
+=item * L<licence-ouverte-v2.0|https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf> (opendata french goverment)
+
+=item * L<open-database-license-v1.0|https://opendatacommons.org/files/2018/02/odbl-10.txt>
+
+=back
 
 Note that these licenses are dedicated to open data.
 Please do not use an open license that would have been thought for source code or documentation and not for open data.
