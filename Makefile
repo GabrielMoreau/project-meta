@@ -16,7 +16,7 @@ install: update
 
 update:
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)
-	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)/licence.d
+	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)/license.d
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(SHAREDIR)/template.d
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(MANDIR)
 	@install -d -m 0755 -o root -g root $(DESTDIR)/$(COMPDIR)
@@ -26,7 +26,7 @@ update:
 	install    -m 0644 -o root -g root project-meta.1.gz $(DESTDIR)/$(MANDIR)
 
 	install    -m 0644 -o root -g root PROJECT-META.sample.yml $(DESTDIR)/$(SHAREDIR)
-	install    -m 0644 -o root -g root licence.d/*.txt $(DESTDIR)/$(SHAREDIR)/licence.d
+	install    -m 0644 -o root -g root license.d/*.txt $(DESTDIR)/$(SHAREDIR)/license.d
 	install    -m 0644 -o root -g root template.d/*.tt $(DESTDIR)/$(SHAREDIR)/template.d
 
 	install    -m 0644 -o root -g root project-meta.bash_completion $(DESTDIR)/$(COMPDIR)/project-meta

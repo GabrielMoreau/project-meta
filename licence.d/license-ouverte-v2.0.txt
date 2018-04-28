@@ -1,7 +1,4 @@
-Licence Ouverte V 2.0
-
-LICENCE OUVERTE / OPEN LICENCE
-Version 2.0
+LICENCE OUVERTE / OPEN LICENCE - Version 2.0
 
 « REUTILISATION » DE L’ « INFORMATION » SOUS CETTE LICENCE
 Le « Concédant » concède au « Réutilisateur » un droit non exclusif et gratuit de libre
@@ -9,11 +6,11 @@ Le « Concédant » concède au « Réutilisateur » un droit non exclusif et gr
 commerciales ou non, dans le monde entier et pour une durée illimitée, dans les
 conditions exprimées ci-dessous.
 Le « Réutilisateur » est libre de réutiliser l‘ « Information » :
- de la reproduire, la copier,
- de l‘adapter, la modifier, l‘extraire et la transformer, pour créer des
+- de la reproduire, la copier,
+- de l‘adapter, la modifier, l‘extraire et la transformer, pour créer des
 « Informations dérivées », des produits ou des services,
- de la communiquer, la diffuser, la redistribuer, la publier et la transmettre,
- de l’exploiter à titre commercial, par exemple en la combinant avec d’autres
+- de la communiquer, la diffuser, la redistribuer, la publier et la transmettre,
+- de l’exploiter à titre commercial, par exemple en la combinant avec d’autres
 informations, ou en l’incluant dans son propre produit ou application.
 Sous réserve de :
 - mentionner la paternité de l’ « Information » : sa source (au moins le nom du
@@ -35,11 +32,6 @@ personnel » pouvant faire l’objet d’une « Réutilisation ». Si tel est le
 « Concédant » informe le « Réutilisateur » de leur présence. L’ « Information » peut
 être librement réutilisée, dans le cadre des droits accordés par la présente licence, à
 
-Avril 2017
-
-1/4
-
-Licence Ouverte V 2.0
 condition de respecter le cadre légal relatif à la protection des données à
 caractère personnel.
 
@@ -75,12 +67,6 @@ la présente licence ainsi qu’avec les licences « Open Government Licence » 
 du Royaume-Uni, « Creative Commons Attribution » (CC-BY) de Creative Commons
 et « Open Data Commons Attribution » (ODC-BY) de l’Open Knowledge Foundation.
 
-Avril 2017
-
-2/4
-
-Licence Ouverte V 2.0
-
 DEFINITIONS
 
 Sont considérés, au sens de la présente licence comme :
@@ -109,8 +95,6 @@ réutilise les « Informations »
 conformément aux conditions de la
 présente licence.
 
-Avril 2017
-
 Des « Données à caractère personnel » :
 toute information se rapportant à une
 personne physique identifiée ou
@@ -133,9 +117,6 @@ voisins au droit d’auteur, droit sui generis
 des producteurs de bases de
 données…).
 
-3/4
-
-Licence Ouverte V 2.0
 
 À PROPOS DE CETTE LICENCE
 
@@ -160,9 +141,3 @@ Cette licence est la version 2.0 de la Licence Ouverte.
 Etalab se réserve la faculté de proposer de nouvelles versions de la Licence Ouverte.
 Cependant, les « Réutilisateurs » pourront continuer à réutiliser les informations qu’ils
 ont obtenues sous cette licence s’ils le souhaitent.
-
-Avril 2017
-
-4/4
-
-

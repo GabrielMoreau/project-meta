@@ -14,7 +14,7 @@ Description
   
 [% description %]
 
-OpenData Licence: [% licence %]
+OpenData License: [% license %]
 
 
 [% IF doi %][% IF doi.size > 1 %]

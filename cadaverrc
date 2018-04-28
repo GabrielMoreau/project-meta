@@ -4,6 +4,6 @@ mkdir project-meta
 cd project-meta
 mput *.html
 mput PROJECT-META.sample.yml
-mput LICENCE.txt
+mput LICENSE.txt
 
 quit

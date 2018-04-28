@@ -31,9 +31,9 @@ my %CMD_DB = (
    'remove-link'     => \&cmd_remove_link,
    'make-zip'        => \&cmd_make_zip,
    'make-author'     => \&cmd_make_author,
-   'make-licence'    => \&cmd_make_licence,
+   'make-license'    => \&cmd_make_license,
    'make-copyright'  => \&cmd_make_copyright,
-   'list-licence'    => \&cmd_list_licence,
+   'list-license'    => \&cmd_list_license,
    );
 
 ################################################################
@@ -89,8 +89,8 @@ project-meta - opendata project metafile manager
  project-meta make-link
  project-meta remove-link
  project-meta make-zip
- project-meta list-licence
- project-meta make-licence
+ project-meta list-license
+ project-meta make-license
  project-meta make-author
  project-meta make-copyright
 END
@@ -127,7 +127,7 @@ sub cmd_make_link {
    my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
    my $data_set    = $meta->{'public-dap'}{'data-set'};
 
-   push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENCE.txt';
+   push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENSE.txt';
    {
       # Remove doublon
       my %seen = ();
@@ -186,7 +186,7 @@ sub cmd_make_zip {
    my $data_set    = $meta->{'public-dap'}{'data-set'};
    my $acronym     = $meta->{'project'}{'acronym'};
 
-   push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENCE.txt';
+   push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENSE.txt';
    {
       # Remove doublon
       my %seen = ();
@@ -265,27 +265,27 @@ sub cmd_make_author {
 
 ################################################################
 
-sub cmd_make_licence {
+sub cmd_make_license {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
 
    my $current_dir = Cwd::getcwd();
 
-   if (-f "$current_dir/LICENCE.txt") {
-      print "Warning: LICENCE.txt already exists\n";
+   if (-f "$current_dir/LICENSE.txt") {
+      print "Warning: LICENSE.txt already exists\n";
       return;
       }
 
-   my $licence = $meta->{'public-dap'}{'data-licence'};
+   my $license = $meta->{'public-dap'}{'data-license'};
 
-   if (not -f "/usr/share/project-meta/licence.d/$licence.txt") {
-      print "Error: licence $licence doesn't exists in project-meta database\n";
+   if (not -f "/usr/share/project-meta/license.d/$license.txt") {
+      print "Error: license $license doesn't exists in project-meta database\n";
       exit 1;
       }
 
-   copy("/usr/share/project-meta/licence.d/$licence.txt", "$current_dir/LICENCE.txt")
-      or die "Error: licence copy failed - $!";
+   copy("/usr/share/project-meta/license.d/$license.txt", "$current_dir/LICENSE.txt")
+      or die "Error: license copy failed - $!";
 
-   print "Info: LICENCE.txt file create\n";
+   print "Info: LICENSE.txt file create\n";
    return;
    }
 
@@ -325,7 +325,7 @@ sub cmd_make_copyright {
          acronym     => $meta->{'project'}{'acronym'},
          authorlist  => $meta->{'project'}{'authors'},
          description => $meta->{'project'}{'short-description'},
-         licence     => $meta->{'public-dap'}{'data-licence'},
+         license     => $meta->{'public-dap'}{'data-license'},
          doi         => $meta->{'publication'}{'doi'},
       }, \$msg_format) || die $tt->error;
 
@@ -336,17 +336,17 @@ sub cmd_make_copyright {
 
 ################################################################
 
-sub cmd_list_licence {
-   opendir my $dh, '/usr/share/project-meta/licence.d/' or die $!;
-   for my $licence (readdir $dh) {
+sub cmd_list_license {
+   opendir my $dh, '/usr/share/project-meta/license.d/' or die $!;
+   for my $license (readdir $dh) {
       # Keep only file
-      next if not -f "/usr/share/project-meta/licence.d/$licence";
+      next if not -f "/usr/share/project-meta/license.d/$license";
       
       # Keep only .txt file
-      next if not $licence =~ m/\.txt$/;
+      next if not $license =~ m/\.txt$/;
 
-      $licence =~ s/\.txt$//;
-      print "$licence\n";
+      $license =~ s/\.txt$//;
+      print "$license\n";
       }
    closedir $dh;
    }
@@ -370,8 +370,8 @@ project-meta - opendata project metafile manager
  project-meta make-link
  project-meta remove-link
  project-meta make-zip
- project-meta list-licence
- project-meta make-licence
+ project-meta list-license
+ project-meta make-license
  project-meta make-author
  project-meta make-copyright
 
@@ -407,7 +407,7 @@ you can use C<yamllint> or C<ysh> commands to check just it's format.
  project-meta make-link
 
 Create UNIX soft links on the OpeNDAP folder to the real data.
-Files F<AUTHORS.txt>, F<LICENCE.txt> and F<COPYRIGHT.txt> are mandatory but could be generated (see below).
+Files F<AUTHORS.txt>, F<LICENSE.txt> and F<COPYRIGHT.txt> are mandatory but could be generated (see below).
 The main keys use in the F<PROJECT-META.yml> are:
 
 =over
@@ -442,7 +442,7 @@ Please verify the returned values before excuted it with the C<-delete> option.
  project-meta make-zip
 
 Create a ZIP archive with the open data set.
-Files F<AUTHORS.txt>, F<LICENCE.txt> and F<COPYRIGHT.txt> are mandatory but could be generated (see below).
+Files F<AUTHORS.txt>, F<LICENSE.txt> and F<COPYRIGHT.txt> are mandatory but could be generated (see below).
 The main keys use in the F<PROJECT-META.yml> are:
 
 =over
@@ -453,28 +453,28 @@ The main keys use in the F<PROJECT-META.yml> are:
 
 =back
 
-=head2 list-licence
+=head2 list-license
 
- project-meta list-licence
+ project-meta list-license
 
-Give the list of all the open data licence supported by the project-meta licence database.
-At this time the possible licence are:
+Give the list of all the open data license supported by the project-meta license database.
+At this time the possible license are:
 
  license-ouverte-v2.0
  open-database-license-v1.0
 
-Note that these licences are dedicated to open data.
-Please do not use open licence that have been written for code or documentation for data.
+Note that these licenses are dedicated to open data.
+Please do not use an open license that would have been thought for source code or documentation and not for open data.
 
-=head2 make-licence
+=head2 make-license
 
- project-meta make-licence
+ project-meta make-license
 
-Copy the licence file from the project-meta licence database at the current folder
-with the file name: F<LICENCE.txt>.
+Copy the license file from the project-meta license database at the current folder
+with the file name: F<LICENSE.txt>.
 
-The licence is defined in the F<PROJECT-META.yml> specification under the key C<public-dap/data-licence>.
-The list of possible licence is given with the command L</list-licence>.
+The license is defined in the F<PROJECT-META.yml> specification under the key C<public-dap/data-license>.
+The list of possible license is given with the command L</list-license>.
 
 =head2 make-author
 
@@ -488,7 +488,7 @@ Authors data are extracted from the C<PROJECT-META.yml> file.
  project-meta make-copyright
 
 Create or update the F<COPYRIGHT.txt> file at the current folder.
-Authors, licence and copyright data are extracted from the C<PROJECT-META.yml> file.
+Authors, license and copyright data are extracted from the C<PROJECT-META.yml> file.
 
 
 =head1 METAFILE SPECIFICATION
@@ -507,15 +507,28 @@ This one is actually the master reference specification!
 
 =head1 SEE ALSO
 
-yamllint(1), ysh(1)
+yamllint(1), ysh(1), YAML, Archive::Zip
 
-In Debian, package for C<yamllint> and C<ysh> are
+In Debian GNU/Linux distribution, packages for C<yamllint> and C<ysh> are:
 
 =over
 
 =item * C<yamllint> - Linter for YAML files (Python)
 
 =item * C<libyaml-shell-perl> - YAML test shell (Perl)
+
+=back
+
+
+Own project ressources:
+
+=over
+
+=item * L<Web site|http://servforge.legi.grenoble-inp.fr/projects/soft-trokata/wiki/SoftWare/ProjectMeta>
+
+=item * L<Online Manual|http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/project-meta.html>
+
+=item * L<SVN repository|http://servforge.legi.grenoble-inp.fr/svn/soft-trokata/trunk/project-meta>
 
 =back
 
@@ -538,6 +551,6 @@ Joel Sommeria, Julien Chauchat, Cyrille Bonamy, Antoine Mathieu.
 
 =head1 LICENSE AND COPYRIGHT
 
-Licence GNU GPL version 2 or later and Perl equivalent
+License GNU GPL version 2 or later and Perl equivalent
 
 Copyright (C) 2017-2018 Gabriel Moreau <Gabriel.Moreau(A)univ-grenoble-alpes.fr>.
