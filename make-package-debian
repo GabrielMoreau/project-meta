@@ -12,7 +12,7 @@ tmp_folder=$(mktemp --directory /tmp/project-meta-XXXXXX)
 
 # Set Version
 PROJECT_META_VERSION=$(grep 'version->declare' project-meta | cut -f 2 -d "'")
-LOCAL_VERSION=2
+LOCAL_VERSION=1
 
 # Create future tree
 mkdir -p ${tmp_folder}/usr/bin

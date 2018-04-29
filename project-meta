@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.0.7');
+use version; our $VERSION = version->declare('0.0.8');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -24,16 +24,17 @@ Getopt::Long::GetOptions(
 
 
 my %CMD_DB = (
-   'help'            => \&cmd_help,
-   'version'         => \&cmd_version,
-   'check'           => \&cmd_check,
-   'make-link'       => \&cmd_make_link,
-   'remove-link'     => \&cmd_remove_link,
-   'make-zip'        => \&cmd_make_zip,
-   'make-author'     => \&cmd_make_author,
-   'make-license'    => \&cmd_make_license,
-   'make-copyright'  => \&cmd_make_copyright,
-   'list-license'    => \&cmd_list_license,
+   'help'                  => \&cmd_help,
+   'version'               => \&cmd_version,
+   'check'                 => \&cmd_check,
+   'make-link'             => \&cmd_make_link,
+   'remove-link'           => \&cmd_remove_link,
+   'make-zip'              => \&cmd_make_zip,
+   'make-allfiles'         => \&cmd_make_allfiles,
+   'make-file-author'      => \&cmd_make_file_author,
+   'make-file-copyright'   => \&cmd_make_file_copyright,
+   'make-file-license'     => \&cmd_make_file_license,
+   'list-license'          => \&cmd_list_license,
    );
 
 ################################################################
@@ -89,10 +90,11 @@ project-meta - opendata project metafile manager
  project-meta make-link
  project-meta remove-link
  project-meta make-zip
+ project-meta make-allfiles
  project-meta list-license
- project-meta make-license
- project-meta make-author
- project-meta make-copyright
+ project-meta make-file-license
+ project-meta make-file-author
+ project-meta make-file-copyright
 END
    }
 
@@ -224,7 +226,15 @@ sub cmd_make_zip {
 
 ################################################################
 
-sub cmd_make_author {
+sub cmd_make_allfiles {
+   cmd_make_file_author();
+   cmd_make_file_license();
+   cmd_make_file_copyright();
+   }
+
+################################################################
+
+sub cmd_make_file_author {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
 
    my $current_dir = Cwd::getcwd();
@@ -265,7 +275,7 @@ sub cmd_make_author {
 
 ################################################################
 
-sub cmd_make_license {
+sub cmd_make_file_license {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
 
    my $current_dir = Cwd::getcwd();
@@ -291,7 +301,7 @@ sub cmd_make_license {
 
 ################################################################
 
-sub cmd_make_copyright {
+sub cmd_make_file_copyright {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
 
    my $current_dir = Cwd::getcwd();
@@ -371,9 +381,9 @@ project-meta - opendata project metafile manager
  project-meta remove-link
  project-meta make-zip
  project-meta list-license
- project-meta make-license
- project-meta make-author
- project-meta make-copyright
+ project-meta make-file-license
+ project-meta make-file-author
+ project-meta make-file-copyright
 
 
 =head1 DESCRIPTION
@@ -453,6 +463,14 @@ The main keys use in the F<PROJECT-META.yml> are:
 
 =back
 
+=head2 make-allfiles
+
+ project-meta make-allfiles
+
+Generate or update all files: F<AUTHORS.txt>, F<COPYRIGHT.txt> and F<LICENSE.txt>.
+This command is just a shortcut for L</make-file-author>, L</make-file-copyright> and L</make-file-license>.
+
+
 =head2 list-license
 
  project-meta list-license
@@ -475,9 +493,9 @@ At this time the possible licenses are:
 Note that these licenses are dedicated to open data.
 Please do not use an open license that would have been thought for source code or documentation and not for open data.
 
-=head2 make-license
+=head2 make-file-license
 
- project-meta make-license
+ project-meta make-file-license
 
 Copy the license file from the project-meta license database at the current folder
 with the file name: F<LICENSE.txt>.
@@ -485,16 +503,16 @@ with the file name: F<LICENSE.txt>.
 The license is defined in the F<PROJECT-META.yml> specification under the key C<public-dap/data-license>.
 The list of possible license is given with the command L</list-license>.
 
-=head2 make-author
+=head2 make-file-author
 
- project-meta make-author
+ project-meta make-file-author
 
 Create or update the F<AUTHORS.txt> file at the current folder.
 Authors data are extracted from the C<PROJECT-META.yml> file.
 
-=head2 make-copyright
+=head2 make-file-copyright
 
- project-meta make-copyright
+ project-meta make-file-copyright
 
 Create or update the F<COPYRIGHT.txt> file at the current folder.
 Authors, license and copyright data are extracted from the C<PROJECT-META.yml> file.
