@@ -462,9 +462,11 @@ At this time the possible licenses are:
 
 =over
 
-=item * L<creative-common-zero-v1.0|https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt> (like public domain)
+=item * L<creative-common-zero-v1.0|https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt>
+        (like public domain)
 
-=item * L<licence-ouverte-v2.0|https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf> (opendata french goverment)
+=item * L<licence-ouverte-v2.0|https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf>
+        (opendata french goverment)
 
 =item * L<open-database-license-v1.0|https://opendatacommons.org/files/2018/02/odbl-10.txt>
 
@@ -503,7 +505,8 @@ Authors, license and copyright data are extracted from the C<PROJECT-META.yml> f
 Each project must have an open data metafile which describe the project : C<PROJECT-META.yml>.
 The file is in YAML format because this is a human readable style of text file.
 
-You can find in the project-meta software a C<PROJECT-META.sample.yml> example.
+You can find in the project-meta software a
+L<PROJECT-META.sample.yml|http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/PROJECT-META.sample.yml> example.
 This one is actually the master reference specification!
 
 
