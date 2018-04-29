@@ -6,4 +6,8 @@ mput *.html
 mput PROJECT-META.sample.yml
 mput LICENSE.txt
 
+mkdir download
+cd download
+mput project-meta_*_amd64.deb
+
 quit
