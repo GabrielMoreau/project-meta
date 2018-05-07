@@ -483,8 +483,11 @@ At this time the possible licenses are:
 =item * L<creative-common-zero-v1.0|https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt>
         (like public domain)
 
+=item * L<creative-common-attribution-v4.0|https://creativecommons.org/licenses/by/4.0/legalcode.txt>
+        (copyleft - allow users to freely share and adapt while maintaining this same freedom for others)
+
 =item * L<licence-ouverte-v2.0|https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf>
-        (opendata french goverment)
+        (copyleft - opendata french goverment)
 
 =item * L<open-database-license-v1.0|https://opendatacommons.org/files/2018/02/odbl-10.txt>
         (copyleft - allow users to freely share, modify, and use while maintaining this same freedom for others)
