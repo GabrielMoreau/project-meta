@@ -1,0 +1,3 @@
+project-meta.1.gz
+project-meta.html
+project-meta_*_amd64.deb

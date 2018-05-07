@@ -6,7 +6,7 @@ SHAREDIR=/usr/share/project-meta
 ETCDIR=/etc/project-meta
 COMPDIR=/etc/bash_completion.d
 
-.PHONY: all install update sync upload stat help pkg
+.PHONY: all ignore install update sync upload stat help pkg
 
 all:
 	pod2man project-meta | gzip > project-meta.1.gz
@@ -53,3 +53,7 @@ help:
 	@echo " * upload  : upload on public dav forge space"
 	@echo " * stat    : svn stat with gnuplot graph"
 	@echo " * pkg     : build Debian package"
+	@echo "ignore - svn rules to ignore some files"
+
+ignore: svnignore.txt
+	svn propset svn:ignore -F svnignore.txt .
