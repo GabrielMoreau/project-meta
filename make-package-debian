@@ -36,9 +36,11 @@ rm -f ${tmp_folder}/data.tar.gz
 cat <<END > ${tmp_folder}/control
 Package: project-meta
 Version: ${PROJECT_META_VERSION}-${LOCAL_VERSION}
-Section: dev
+Section: utils
+Tag: implemented-in::perl, interface::commandline, role::program,
+ works-with-format::zip, works-with::archive, works-with::file
 Priority: optional
-Depends: perl, libyaml-syck-perl, libtemplate-perl, libarchive-zip-perl
+Depends: perl, libyaml-syck-perl, libtemplate-perl, libarchive-zip-perl, coreutils, findutils
 Suggests: libyaml-shell-perl | yamllint
 Architecture: amd64
 Installed-Size: $(du -ks ${tmp_folder}|cut -f 1)
