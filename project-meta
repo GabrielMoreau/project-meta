@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.0.9');
+use version; our $VERSION = version->declare('0.0.10');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -27,8 +27,8 @@ my %CMD_DB = (
    'help'                  => \&cmd_help,
    'version'               => \&cmd_version,
    'check'                 => \&cmd_check,
-   'make-link'             => \&cmd_make_link,
-   'remove-link'           => \&cmd_remove_link,
+   'dap-publish'           => \&cmd_dap_publish,
+   'dap-unpublish'         => \&cmd_dap_unpublish,
    'make-zip'              => \&cmd_make_zip,
    'make-allfiles'         => \&cmd_make_allfiles,
    'make-file-author'      => \&cmd_make_file_author,
@@ -87,8 +87,8 @@ project-meta - opendata project metafile manager
  project-meta help
  project-meta version
  project-meta check
- project-meta make-link
- project-meta remove-link
+ project-meta dap-publish
+ project-meta dap-unpublish
  project-meta make-zip
  project-meta make-allfiles
  project-meta list-license
@@ -122,7 +122,7 @@ sub cmd_check {
 
 ################################################################
 
-sub cmd_make_link {
+sub cmd_dap_publish {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
    my $current_dir = Cwd::getcwd();
    my $acronym     = $meta->{'project'}{'acronym'};
@@ -167,7 +167,7 @@ sub cmd_make_link {
 
 ################################################################
 
-sub cmd_remove_link {
+sub cmd_dap_unpublish {
    my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
    my $current_dir = Cwd::getcwd();
    my $acronym     = $meta->{'project'}{'acronym'};
@@ -377,8 +377,8 @@ project-meta - opendata project metafile manager
  project-meta help
  project-meta version
  project-meta check
- project-meta make-link
- project-meta remove-link
+ project-meta dap-publish
+ project-meta dap-unpublish
  project-meta make-zip
  project-meta list-license
  project-meta make-file-license
@@ -412,11 +412,14 @@ Check your F<PROJECT-META.yml> has the good key.
 If your metafile is not a valid YAML file,
 you can use C<yamllint> or C<ysh> commands to check just it's format.
 
-=head2 make-link
+=head2 dap-publish
 
- project-meta make-link
+ project-meta dap-publish
 
-Create UNIX soft links on the OpeNDAP folder to the real data.
+Publish data on an OpeNDAP server.
+Because data can be very large,
+This command just create UNIX soft links on the OpeNDAP folder to the real data.
+There is no copy.
 Files F<AUTHORS.txt>, F<LICENSE.txt> and F<COPYRIGHT.txt> are mandatory but could be generated (see below).
 The main keys use in the F<PROJECT-META.yml> are:
 
@@ -434,14 +437,15 @@ Because this command could be dangerous, it does nothing!
 It print on terminal shell command to be done.
 You have to verify ouput before eval it.
 
- project-meta make-link
- project-meta make-link | bash
+ project-meta dap-publish
+ project-meta dap-publish | bash
 
-=head2 remove-link
+=head2 dap-unpublish
 
- project-meta remove-link
+ project-meta dap-unpublish
 
-Remove link in OpeNDAP folder for that projet.
+Unpublish data from the OpeNDAP server.
+In practice, it remove links in OpeNDAP folder for that projet.
 Because command C<rm> is always dangerous,
 we use here the command C<find> limited to folder and link.
 
