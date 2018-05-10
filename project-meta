@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.0.10');
+use version; our $VERSION = version->declare('0.0.11');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -484,11 +484,17 @@ At this time the possible licenses are:
 
 =over
 
-=item * L<creative-common-zero-v1.0|https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt>
-        (like public domain)
+=item * L<community-data-license-agreement-permissive-v1.0|https://cdla.io/permissive-1-0/wp-content/uploads/sites/52/2017/10/CDLA-Permissive-v1.0.pdf>
+        (permissive - allow users to freely share and adapt)
+
+=item * L<community-data-license-agreement-sharing-v1.0|https://cdla.io/sharing-1-0/wp-content/uploads/sites/52/2017/10/CDLA-Sharing-v1.0.pdf>
+        (copyleft - allow users to freely share and adapt while maintaining this same freedom for others)
 
 =item * L<creative-common-attribution-v4.0|https://creativecommons.org/licenses/by/4.0/legalcode.txt>
         (copyleft - allow users to freely share and adapt while maintaining this same freedom for others)
+
+=item * L<creative-common-zero-v1.0|https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt>
+        (like public domain)
 
 =item * L<licence-ouverte-v2.0|https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf>
         (copyleft - opendata french goverment)
@@ -500,6 +506,17 @@ At this time the possible licenses are:
 
 Note that these licenses are dedicated to open data.
 Please do not use an open license that would have been thought for source code or documentation and not for open data.
+Here are some links about open data licence context:
+
+=over
+
+=item * A good article about Community Data License Agreement and Open Data Licence in general
+   L<Licenses for data|https://lwn.net/Articles/753648/> written on 9 May 2018.
+
+=item * A french page about French Public Open Data licence
+   L<https://www.etalab.gouv.fr/licence-ouverte-open-licence>.
+
+=back
 
 =head2 make-file-license
 
