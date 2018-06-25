@@ -10,9 +10,10 @@ export LANG=C
 tmp_folder=$(mktemp --directory /tmp/project-meta-XXXXXX)
 [ -n "${tmp_folder}" -a -d "${tmp_folder}" ] || exit 1
 
-# Set Version
-PROJECT_META_VERSION=$(grep 'version->declare' project-meta | cut -f 2 -d "'")
-LOCAL_VERSION=1
+# Set Name and Version
+PKG_NAME=project-meta
+CODE_VERSION=$(grep 'version->declare' project-meta | cut -f 2 -d "'") #'
+PKG_VERSION=2
 
 # Create future tree
 mkdir -p ${tmp_folder}/usr/bin
@@ -27,15 +28,18 @@ cp PROJECT-META.sample.yml       ${tmp_folder}/usr/share/project-meta/
 cp license.d/*.txt               ${tmp_folder}/usr/share/project-meta/license.d/
 cp template.d/*.tt               ${tmp_folder}/usr/share/project-meta/template.d/
 cp project-meta.bash_completion  ${tmp_folder}/etc/bash_completion.d/
+chmod -R a+rx        ${tmp_folder}/usr/bin/project-meta
+chmod -R a+rX,go-w   ${tmp_folder}/usr
+chmod -R a+rX,go-w   ${tmp_folder}/etc
 
 # Data archive
 rm -f ${tmp_folder}/data.tar.gz
-(cd ${tmp_folder}; tar czf data.tar.gz ./usr ./etc)
+(cd ${tmp_folder}; tar --owner root --group root -czf data.tar.gz ./usr ./etc)
 
 # Control file
 cat <<END > ${tmp_folder}/control
-Package: project-meta
-Version: ${PROJECT_META_VERSION}-${LOCAL_VERSION}
+Package: ${PKG_NAME}
+Version: ${CODE_VERSION}-${PKG_VERSION}
 Section: utils
 Tag: implemented-in::perl, interface::commandline, role::program,
  works-with-format::zip, works-with::archive, works-with::file
@@ -54,18 +58,18 @@ END
 
 # Control archive
 rm -f ${tmp_folder}/control.tar.gz
-(cd ${tmp_folder}; tar czf control.tar.gz control)
+(cd ${tmp_folder}; tar --owner root --group root -czf control.tar.gz control)
 
 # Format deb package
 echo 2.0 > ${tmp_folder}/debian-binary
 
 # Create package (control before data)
-ar -r project-meta_${PROJECT_META_VERSION}-${LOCAL_VERSION}_amd64.deb ${tmp_folder}/debian-binary ${tmp_folder}/control.tar.gz ${tmp_folder}/data.tar.gz
+ar -r ${PKG_NAME}_${CODE_VERSION}-${PKG_VERSION}_amd64.deb ${tmp_folder}/debian-binary ${tmp_folder}/control.tar.gz ${tmp_folder}/data.tar.gz
       
 # Clean
 rm -rf ${tmp_folder}
 
 # Prepare reprepro upload
 echo "# Prepare reprepro upload"
-echo "( cd /srv/www/debian/ ; reprepro includedeb jessie ~/jessie/project-meta_${PROJECT_META_VERSION}-${LOCAL_VERSION}_amd64.deb )"
+echo "( cd /srv/www/debian/ ; reprepro includedeb jessie ~/jessie/${PKG_NAME}_${CODE_VERSION}-${PKG_VERSION}_amd64.deb )"
 echo "( cd /srv/www/debian/ ; reprepro dumpreferences ) | grep -i project-meta"
