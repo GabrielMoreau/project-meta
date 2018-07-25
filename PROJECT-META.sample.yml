@@ -5,17 +5,24 @@ project:
    title: Blockage of saline intrusions in restricted, two-layer exchange flows across a submerged sill obstruction
 
    identifier:
-      - 14CARR (type: acronym)
-      - http://servforge.legi.grenoble-inp.fr/projects/pj-coriolis-14carr (type: url-doc)
+      - acronym: 14CARR
+      - url-doc: http://servforge.legi.grenoble-inp.fr/projects/pj-coriolis-14carr
 
    creator:
-      - Alan Cuthbertson <email> location
-      - Janek Laanearu <email> location
-      - Magda Carr <email> location
-      - Joel Sommeria <Joel.Sommeria(A)univ-grenoble-alpes.fr> LEGI UMR5519 Grenoble
-      - Samuel Viboud <Samuel.Viboud(A)univ-grenoble-alpes.fr> LEGI UMR5519 Grenoble
+      - Alan Cuthbertson <a.cuthbertson@hw.ac.uk> Heriot Watt University, Edinburgh, UK
+      - Janek Laanearu <janek.laanearu@ttu.ee> Tallinn University of Technology, Tallinn, Estonia
+      - Magda Carr <magda.carr@st-and.ac.uk> University of St Andrews, St Andrews, UK
+      - Joel Sommeria <Joel.Sommeria(A)univ-grenoble-alpes.fr> LEGI UMR5519, Grenoble, France
+      - Samuel Viboud <Samuel.Viboud(A)univ-grenoble-alpes.fr> LEGI UMR5519, Grenoble, France
 
-   subject: list of keywords
+   subject:
+      - Exchange flows
+      - Net-barotropic flows
+      - Saline intrusion blockage
+      - Sill obstructions
+      - Stratified flow
+      - Mixing and entrainment
+      - Internal-flow hydraulic modelling
 
    contributor: 
       - LEGI Coriolis Platform Grenoble
@@ -36,6 +43,7 @@ project:
 
    type:
       - dataset
+      - image
 
    format:
       - image/png
@@ -48,7 +56,7 @@ project:
    language: en-US
 
    relation
-      - doi:10.1007/s10652-017-9523-2
+      - doi: 10.1007/s10652-017-9523-2
 
    coverage: Hydralab, LEGI, Coriolis, Grenoble (2014)
 
