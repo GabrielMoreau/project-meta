@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.0.12');
+use version; our $VERSION = version->declare('0.1.1');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -16,6 +16,7 @@ use Cwd();
 use Template;
 use Archive::Zip qw(:ERROR_CODES :CONSTANTS);
 
+our $CFG_VERSION = 2;
 
 my ($verbose);
 Getopt::Long::GetOptions(
@@ -35,6 +36,7 @@ my %CMD_DB = (
    'make-file-copyright'   => \&cmd_make_file_copyright,
    'make-file-license'     => \&cmd_make_file_license,
    'list-license'          => \&cmd_list_license,
+   'upgrade'               => \&cmd_upgrade,
    );
 
 ################################################################
@@ -77,6 +79,52 @@ sub addfolder2list {
    }
 
 ################################################################
+
+sub upgrade_version_1_to_2 {
+   my $meta = shift;
+
+   $meta->{'project'}{'identifier'} ||= {};
+   $meta->{'project'}{'identifier'}{'acronym'} = $meta->{'project'}{'acronym'};
+   delete $meta->{'project'}{'acronym'};
+
+   $meta->{'project'}{'creator'} = $meta->{'project'}{'authors'};
+   delete $meta->{'project'}{'authors'};
+
+   $meta->{'project'}{'description'} = $meta->{'project'}{'short-description'};
+   delete $meta->{'project'}{'short-description'};
+
+   $meta->{'project'}{'rights'} = $meta->{'public-dap'}{'data-license'};
+   delete $meta->{'public-dap'}{'data-license'};
+
+   $meta->{'project'}{'relation'} ||= [];
+   for my $doi (@{$meta->{'publication'}{'doi'}}) {
+      push @{$meta->{'project'}{'relation'}}, {doi => $doi};
+      }
+   delete $meta->{'publication'}{'doi'};
+
+   $meta->{'version'} = 2;
+   return $meta;
+   }
+
+################################################################
+
+sub load_metadata {
+   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+
+   my $initial_version = $meta->{'version'};
+   if ($initial_version < $CFG_VERSION) {
+      print "Warning: upgrade config file from version $initial_version to last version $CFG_VERSION\n";
+      my $upgrade = 'upgrade_version_' . ($CFG_VERSION - 1) . '_to_' . $CFG_VERSION;
+      &{$upgrade}($meta);
+      }
+   elsif ($initial_version < $CFG_VERSION) {
+      die "Error: config file at future version $meta->{'version'}, program only at $CFG_VERSION\n"
+      }
+
+   return wantarray ? ($meta, $version) : $meta;
+   }
+
+################################################################
 # command
 ################################################################
 
@@ -95,6 +143,7 @@ project-meta - opendata project metafile manager
  project-meta make-file-license
  project-meta make-file-author
  project-meta make-file-copyright
+ project-meta upgrade
 END
    }
 
@@ -106,14 +155,33 @@ sub cmd_version {
 
 ################################################################
 
-sub cmd_check {
-   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+sub cmd_upgrade {
+   my ($meta, $initial_version) = load_metadata();
 
-   my $acronym     = $meta->{'project'}{'acronym'};
+   if ($initial_version < $meta->{'version'}) {
+      my $next_config = "PROJECT-META-v$meta->{'version'}.yml";
+      if (-e $next_config) {
+         die "Error: upgrade propose config file $next_config already exists\n";
+         }
+      
+      print "Warning: create new config file $next_config, please verify before using it\n";
+      YAML::Syck::SaveFile($next_config, $meta);
+      }
+   else ($initial_version == $CFG_VERSION) {
+      print "Warning: nothing to do, config file already at version $CFG_VERSION\n"
+      };
+   }
+
+################################################################
+
+sub cmd_check {
+   my $meta = load_metadata();
+
+   my $acronym     = $meta->{'project'}{'identifier'}{'acronym'};
    my $current_dir = Cwd::getcwd();
    my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
 
-   print_ok 'project/acronym',                  $acronym =~ m{\d\d\w[\w\d_/]+};
+   print_ok 'project/identifier/acronym',       $acronym =~ m{\d\d\w[\w\d_/]+};
    print_ok 'public-dap/dap-folder',            $dap_folder ne '' and $dap_folder =~ m{^/};
    print_ok 'dap-folder not match current_dir', $dap_folder !~ m{$current_dir};
 
@@ -123,9 +191,9 @@ sub cmd_check {
 ################################################################
 
 sub cmd_dap_publish {
-   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $meta = load_metadata();
    my $current_dir = Cwd::getcwd();
-   my $acronym     = $meta->{'project'}{'acronym'};
+   my $acronym     = $meta->{'project'}{'identifier'}{'acronym'};
    my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
    my $data_set    = $meta->{'public-dap'}{'data-set'};
 
@@ -168,9 +236,9 @@ sub cmd_dap_publish {
 ################################################################
 
 sub cmd_dap_unpublish {
-   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $meta = load_metadata();
    my $current_dir = Cwd::getcwd();
-   my $acronym     = $meta->{'project'}{'acronym'};
+   my $acronym     = $meta->{'project'}{'identifier'}{'acronym'};
    my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
 
    die "Error: DAP folder match current folder" if $dap_folder =~ m{$current_dir} or $current_dir =~ m{$dap_folder};
@@ -183,10 +251,10 @@ sub cmd_dap_unpublish {
 ################################################################
 
 sub cmd_make_zip {
-   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $meta = load_metadata();
    my $current_dir = Cwd::getcwd();
    my $data_set    = $meta->{'public-dap'}{'data-set'};
-   my $acronym     = $meta->{'project'}{'acronym'};
+   my $acronym     = $meta->{'project'}{'identifier'}{'acronym'};
 
    push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENSE.txt';
    {
@@ -235,12 +303,12 @@ sub cmd_make_allfiles {
 ################################################################
 
 sub cmd_make_file_author {
-   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $meta = load_metadata();
 
    my $current_dir = Cwd::getcwd();
 
-   my $acronym    = $meta->{'project'}{'acronym'};
-   my $authors_list = $meta->{'project'}{'authors'};
+   my $acronym    = $meta->{'project'}{'identifier'}{'acronym'};
+   my $authors_list = $meta->{'project'}{'creator'};
 
    if (-f "$current_dir/AUTHORS.txt") {
       # Test for manual or automatically generated file
@@ -276,7 +344,7 @@ sub cmd_make_file_author {
 ################################################################
 
 sub cmd_make_file_license {
-   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $meta = load_metadata();
 
    my $current_dir = Cwd::getcwd();
 
@@ -285,7 +353,7 @@ sub cmd_make_file_license {
       return;
       }
 
-   my $license = $meta->{'public-dap'}{'data-license'};
+   my $license = $meta->{'project'}{'rights'};
 
    if (not -f "/usr/share/project-meta/license.d/$license.txt") {
       print "Error: license $license doesn't exists in project-meta database\n";
@@ -302,7 +370,7 @@ sub cmd_make_file_license {
 ################################################################
 
 sub cmd_make_file_copyright {
-   my $meta = YAML::Syck::LoadFile("PROJECT-META.yml");
+   my $meta = load_metadata();
 
    my $current_dir = Cwd::getcwd();
 
@@ -329,14 +397,20 @@ sub cmd_make_file_copyright {
       POST_CHOMP     => 1, # Remove space and carriage return after %]
       );
    my $msg_format = '';
+   my $doi_first;
+   for my $doi (@{$meta->{'project'}{'relation'}) {
+      next if not exists $doi->{'doi'};
+      $doi_first = $doi->{'doi'};
+      last;
+      }
    $tt->process('COPYRIGHT.tt',
       {
          title       => $meta->{'project'}{'title'},
-         acronym     => $meta->{'project'}{'acronym'},
-         authorlist  => $meta->{'project'}{'authors'},
-         description => $meta->{'project'}{'short-description'},
-         license     => $meta->{'public-dap'}{'data-license'},
-         doi         => $meta->{'publication'}{'doi'},
+         acronym     => $meta->{'project'}{'identifier'}{'acronym'},
+         authorlist  => $meta->{'project'}{'creator'},
+         description => $meta->{'project'}{'description'},
+         license     => $meta->{'project'}{'rights'},
+         doi         => $  doi_first,
       }, \$msg_format) || die $tt->error;
 
    open my $fh,  '>', "$current_dir/COPYRIGHT.txt" or die $!;
@@ -384,6 +458,7 @@ project-meta - opendata project metafile manager
  project-meta make-file-license
  project-meta make-file-author
  project-meta make-file-copyright
+ project-meta upgrade
 
 
 =head1 DESCRIPTION
@@ -425,7 +500,7 @@ The main keys use in the F<PROJECT-META.yml> are:
 
 =over
 
-=item * C<project/acronym>: the project short acronym, add to the OpeNDAP root folder
+=item * C<project/identifier/acronym>: the project short acronym, add to the OpeNDAP root folder
 
 =item * C<public-dap/dap-folder>: the OpeNDAP root folder
 
@@ -461,7 +536,7 @@ The main keys use in the F<PROJECT-META.yml> are:
 
 =over
 
-=item * C<project/acronym>: the project short acronym, use as root folder
+=item * C<project/identifier/acronym>: the project short acronym, use as root folder
 
 =item * C<public-dap/data-set>: a list of files or folder to push
 
@@ -541,6 +616,14 @@ Authors data are extracted from the C<PROJECT-META.yml> file.
 
 Create or update the F<COPYRIGHT.txt> file at the current folder.
 Authors, license and copyright data are extracted from the C<PROJECT-META.yml> file.
+
+=head2 upgrade
+
+ project-meta upgrade
+
+Upgrade config file to last version.
+Create a file F<PROJECT-META-vVERSION.yml> in the current directory if it's not exists, error otherwise.
+Please maually verify this autogenerated config file before rename and using it.
 
 
 =head1 METAFILE SPECIFICATION
