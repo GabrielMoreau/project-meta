@@ -400,7 +400,7 @@ sub cmd_make_file_copyright {
    my $msg_format = '';
    my $doi_first;
    if (exists $meta->{'project'}{'relation'}) {
-      for my $doi (@{$meta->{'project'}{'relation'}) {
+      for my $doi (@{$meta->{'project'}{'relation'}}) {
          next if not exists $doi->{'doi'};
          $doi_first = $doi->{'doi'};
          last;
