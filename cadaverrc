@@ -8,6 +8,6 @@ mput LICENSE.txt
 
 mkdir download
 cd download
-mput project-meta_*_amd64.deb
+mput project-meta_*_all.deb
 
 quit
