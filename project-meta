@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.1.4');
+use version; our $VERSION = version->declare('0.1.5');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -398,7 +398,7 @@ sub cmd_make_file_copyright {
       POST_CHOMP     => 1, # Remove space and carriage return after %]
       );
    my $msg_format = '';
-   my $doi_first;
+   my $doi_first  = '';
    if (exists $meta->{'project'}{'relation'}) {
       for my $doi (@{$meta->{'project'}{'relation'}}) {
          next if not exists $doi->{'doi'};

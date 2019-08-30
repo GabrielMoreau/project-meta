@@ -5,8 +5,8 @@ project:
    title: Blockage of saline intrusions in restricted, two-layer exchange flows across a submerged sill obstruction
 
    identifier:
-      - acronym: 14CARR
-      - url-doc: http://servforge.legi.grenoble-inp.fr/projects/pj-coriolis-14carr
+      acronym: 14CARR
+      url-doc: http://servforge.legi.grenoble-inp.fr/projects/pj-coriolis-14carr
 
    creator:
       - Alan Cuthbertson <a.cuthbertson@hw.ac.uk> Heriot Watt University, Edinburgh, UK
