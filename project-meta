@@ -168,7 +168,7 @@ sub cmd_upgrade {
       print "Warning: create new config file $next_config, please verify before using it\n";
       YAML::Syck::SaveFile($next_config, $meta);
       }
-   else ($initial_version == $CFG_VERSION) {
+   elsif ($initial_version == $CFG_VERSION) {
       print "Warning: nothing to do, config file already at version $CFG_VERSION\n";
       }
    }
