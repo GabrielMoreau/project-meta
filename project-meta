@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.1.3');
+use version; our $VERSION = version->declare('0.1.4');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -399,10 +399,12 @@ sub cmd_make_file_copyright {
       );
    my $msg_format = '';
    my $doi_first;
-   for my $doi (@{$meta->{'project'}{'relation'}) {
-      next if not exists $doi->{'doi'};
-      $doi_first = $doi->{'doi'};
-      last;
+   if (exists $meta->{'project'}{'relation'}) {
+      for my $doi (@{$meta->{'project'}{'relation'}) {
+         next if not exists $doi->{'doi'};
+         $doi_first = $doi->{'doi'};
+         last;
+         }
       }
    $tt->process('COPYRIGHT.tt',
       {
@@ -411,10 +413,10 @@ sub cmd_make_file_copyright {
          authorlist  => $meta->{'project'}{'creator'},
          description => $meta->{'project'}{'description'},
          license     => $meta->{'project'}{'rights'},
-         doi         => $  doi_first,
+         doi         => $doi_first,
       }, \$msg_format) || die $tt->error;
 
-   open my $fh,  '>', "$current_dir/COPYRIGHT.txt" or die $!;
+   open my $fh, '>', "$current_dir/COPYRIGHT.txt" or die $!;
    print $fh "$msg_format\n\n";
    close $fh;
    }
