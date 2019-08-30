@@ -13,7 +13,7 @@ tmp_folder=$(mktemp --directory /tmp/project-meta-XXXXXX)
 # Set Name and Version
 PKG_NAME=project-meta
 CODE_VERSION=$(grep 'version->declare' project-meta | cut -f 2 -d "'") #'
-PKG_VERSION=2
+PKG_VERSION=3
 
 # Create future tree
 mkdir -p ${tmp_folder}/usr/bin
@@ -46,7 +46,7 @@ Tag: implemented-in::perl, interface::commandline, role::program,
 Priority: optional
 Depends: perl, libyaml-syck-perl, libtemplate-perl, libarchive-zip-perl, coreutils, findutils
 Suggests: libyaml-shell-perl | yamllint
-Architecture: amd64
+Architecture: all
 Installed-Size: $(du -ks ${tmp_folder}|cut -f 1)
 Maintainer: Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
 Description: Project-Meta - opendata project metafile manager
@@ -64,12 +64,12 @@ rm -f ${tmp_folder}/control.tar.gz
 echo 2.0 > ${tmp_folder}/debian-binary
 
 # Create package (control before data)
-ar -r ${PKG_NAME}_${CODE_VERSION}-${PKG_VERSION}_amd64.deb ${tmp_folder}/debian-binary ${tmp_folder}/control.tar.gz ${tmp_folder}/data.tar.gz
+ar -r ${PKG_NAME}_${CODE_VERSION}-${PKG_VERSION}_all.deb ${tmp_folder}/debian-binary ${tmp_folder}/control.tar.gz ${tmp_folder}/data.tar.gz
       
 # Clean
 rm -rf ${tmp_folder}
 
 # Prepare reprepro upload
 echo "# Prepare reprepro upload"
-echo "( cd /srv/www/debian/ ; reprepro includedeb jessie ~/jessie/${PKG_NAME}_${CODE_VERSION}-${PKG_VERSION}_amd64.deb )"
+echo "( cd /srv/www/debian/ ; reprepro includedeb jessie ~/jessie/${PKG_NAME}_${CODE_VERSION}-${PKG_VERSION}_all.deb )"
 echo "( cd /srv/www/debian/ ; reprepro dumpreferences ) | grep -i project-meta"
