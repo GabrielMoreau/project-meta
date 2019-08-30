@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.1.6');
+use version; our $VERSION = version->declare('0.1.8');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -255,10 +255,16 @@ sub cmd_dap_unpublish {
 
 sub cmd_dataset_size {
    my $meta = load_metadata();
-   my $current_dir = Cwd::getcwd();
+   my $data_set = $meta->{'public-dap'}{'data-set'};
+   my $total;
    for my $dataset (@{$data_set}) {
-      qx{du -sm $dataset};
+      my $cmd = qx{du -sm $dataset};
+      chomp $cmd;
+      my ($size, $inode) = split /\s+/, $cmd;
+      $total += $size;
+      printf "%-7i %s\n", $size, $inode;
       }
+   print "%-7i %s\n", $total, 'TOTAL';
    }
 
 ################################################################
