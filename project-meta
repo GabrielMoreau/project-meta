@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.1.5');
+use version; our $VERSION = version->declare('0.1.6');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -30,6 +30,7 @@ my %CMD_DB = (
    'check'                 => \&cmd_check,
    'dap-publish'           => \&cmd_dap_publish,
    'dap-unpublish'         => \&cmd_dap_unpublish,
+   'dataset-size'          => \&cmd_dataset_size,
    'make-zip'              => \&cmd_make_zip,
    'make-allfiles'         => \&cmd_make_allfiles,
    'make-file-author'      => \&cmd_make_file_author,
@@ -138,6 +139,7 @@ project-meta - opendata project metafile manager
  project-meta check
  project-meta dap-publish
  project-meta dap-unpublish
+ project-meta dataset-size
  project-meta make-zip
  project-meta make-allfiles
  project-meta list-license
@@ -251,6 +253,15 @@ sub cmd_dap_unpublish {
 
 ################################################################
 
+sub cmd_dataset_size {
+   my $meta = load_metadata();
+   my $current_dir = Cwd::getcwd();
+   for my $dataset (@{$data_set}) {
+      qx{du -sm $dataset};
+      }
+   }
+
+################################################################
 sub cmd_make_zip {
    my $meta = load_metadata();
    my $current_dir = Cwd::getcwd();
@@ -456,6 +467,7 @@ project-meta - opendata project metafile manager
  project-meta check
  project-meta dap-publish
  project-meta dap-unpublish
+ project-meta dataset-size
  project-meta make-zip
  project-meta list-license
  project-meta make-file-license
@@ -528,6 +540,10 @@ Because command C<rm> is always dangerous,
 we use here the command C<find> limited to folder and link.
 
 Please verify the returned values before excuted it with the C<-delete> option.
+
+=head2 dataset-size
+
+ project-meta dataset-size
 
 =head2 make-zip
 
