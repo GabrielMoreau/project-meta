@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.1.8');
+use version; our $VERSION = version->declare('0.1.9');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -264,7 +264,7 @@ sub cmd_dataset_size {
       $total += $size;
       printf "%-7i %s\n", $size, $inode;
       }
-   print "%-7i %s\n", $total, 'TOTAL';
+   printf "%-7i %s\n", $total, 'TOTAL';
    }
 
 ################################################################
