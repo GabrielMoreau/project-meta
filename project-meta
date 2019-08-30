@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.1.1');
+use version; our $VERSION = version->declare('0.1.2');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -116,12 +116,13 @@ sub load_metadata {
       print "Warning: upgrade config file from version $initial_version to last version $CFG_VERSION\n";
       my $upgrade = 'upgrade_version_' . ($CFG_VERSION - 1) . '_to_' . $CFG_VERSION;
       &{$upgrade}($meta);
+      $initial_version = $CFG_VERSION;
       }
    elsif ($initial_version < $CFG_VERSION) {
       die "Error: config file at future version $meta->{'version'}, program only at $CFG_VERSION\n"
       }
 
-   return wantarray ? ($meta, $version) : $meta;
+   return wantarray ? ($meta, $initial_version) : $meta;
    }
 
 ################################################################
