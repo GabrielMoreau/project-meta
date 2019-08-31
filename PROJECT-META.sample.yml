@@ -9,9 +9,9 @@ project:
       url-doc: http://servforge.legi.grenoble-inp.fr/projects/pj-coriolis-14carr
 
    creator:
-      - Alan Cuthbertson <a.cuthbertson@hw.ac.uk> Heriot Watt University, Edinburgh, UK
-      - Janek Laanearu <janek.laanearu@ttu.ee> Tallinn University of Technology, Tallinn, Estonia
-      - Magda Carr <magda.carr@st-and.ac.uk> University of St Andrews, St Andrews, UK
+      - Alan Cuthbertson <a.cuthbertson(A)hw.ac.uk> Heriot Watt University, Edinburgh, UK
+      - Janek Laanearu <janek.laanearu(A)ttu.ee> Tallinn University of Technology, Tallinn, Estonia
+      - Magda Carr <magda.carr(A)st-and.ac.uk> University of St Andrews, St Andrews, UK
       - Joel Sommeria <Joel.Sommeria(A)univ-grenoble-alpes.fr> LEGI UMR5519, Grenoble, France
       - Samuel Viboud <Samuel.Viboud(A)univ-grenoble-alpes.fr> LEGI UMR5519, Grenoble, France
 
@@ -55,7 +55,7 @@ project:
 
    language: en-US
 
-   relation
+   relation:
       - doi: 10.1007/s10652-017-9523-2
 
    coverage: Hydralab, LEGI, Coriolis, Grenoble (2014)
@@ -133,125 +133,6 @@ public-dap:
       - ESTUARY3_160714/ESTUARY3a/Dalsa1.civ.mproj.stat
       - ESTUARY3_160714/ESTUARY3a/Dalsa2.civ4.mproj
       - ESTUARY3_160714/ESTUARY3a/Dalsa2.civ4.mproj.stat
-      - ESTUARY4_160714/ESTUARY4g/Dalsa1.civ_1.mproj
-      - ESTUARY4_160714/ESTUARY4g/Dalsa1.civ_1.mproj.stat
-      - ESTUARY4_160714/ESTUARY4g/Dalsa2.civ4.mproj
-      - ESTUARY4_160714/ESTUARY4g/Dalsa2.civ4.mproj.stat
-      - ESTUARY4_160714/ESTUARY4e/Dalsa1.civ.mproj
-      - ESTUARY4_160714/ESTUARY4e/Dalsa1.civ.mproj.stat
-      - ESTUARY4_160714/ESTUARY4e/Dalsa2.civ4.mproj
-      - ESTUARY4_160714/ESTUARY4e/Dalsa2.civ4.mproj.stat
-      - ESTUARY4_160714/ESTUARY4d/Dalsa1.civ.mproj
-      - ESTUARY4_160714/ESTUARY4d/Dalsa1.civ.mproj.stat
-      - ESTUARY4_160714/ESTUARY4d/Dalsa2.civ4.mproj
-      - ESTUARY4_160714/ESTUARY4d/Dalsa2.civ4.mproj.stat
-      - ESTUARY4_160714/ESTUARY4c/Dalsa1.civ.mproj
-      - ESTUARY4_160714/ESTUARY4c/Dalsa1.civ.mproj.stat
-      - ESTUARY4_160714/ESTUARY4c/Dalsa2.civ4.mproj
-      - ESTUARY4_160714/ESTUARY4b/Dalsa1.civ.mproj
-      - ESTUARY4_160714/ESTUARY4b/Dalsa1.civ.mproj.stat
-      - ESTUARY4_160714/ESTUARY4b/Dalsa2.civ.mproj
-      - ESTUARY4_160714/ESTUARY4b/Dalsa2.civ4.mproj
-      - ESTUARY4_160714/ESTUARY4b/Dalsa2.civ4.mproj.stat
-      - ESTUARY4_160714/ESTUARY4a/Dalsa1.civ.mproj
-      - ESTUARY4_160714/ESTUARY4a/Dalsa1.civ.mproj.stat
-      - ESTUARY4_160714/ESTUARY4a/Dalsa1.civ.mproj.mproj
-      - ESTUARY4_160714/ESTUARY4a/Dalsa2.civ.mproj
-      - ESTUARY4_160714/ESTUARY4a/Dalsa2.civ.mproj.stat
-      - ESTUARY4_160714/ESTUARY4a/Dalsa2.civ4.mproj
-      - ESTUARY4_160714/ESTUARY4a/Dalsa2.civ4.mproj.stat
-      - ESTUARY4_160714/ESTUARY4f/Dalsa1.civ.mproj
-      - ESTUARY4_160714/ESTUARY4f/Dalsa1.civ.mproj.stat
-      - ESTUARY4_160714/ESTUARY4f/Dalsa2.civ4.mproj
-      - ESTUARY4_160714/ESTUARY4f/Dalsa2.civ4.mproj.stat
-      - ESTUARY5_160714/ESTUARY5b/Dalsa1.civ.mproj
-      - ESTUARY5_160714/ESTUARY5b/Dalsa1.civ.mproj.stat
-      - ESTUARY5_160714/ESTUARY5b/Dalsa2.civ4.mproj
-      - ESTUARY5_160714/ESTUARY5b/Dalsa2.civ4.mproj.stat
-      - ESTUARY5_160714/ESTUARY5c/Dalsa1.civ.mproj
-      - ESTUARY5_160714/ESTUARY5c/Dalsa1.civ.mproj.stat
-      - ESTUARY5_160714/ESTUARY5c/Dalsa2.civ4.mproj
-      - ESTUARY5_160714/ESTUARY5c/Dalsa2.civ4.mproj.stat
-      - ESTUARY5_160714/ESTUARY5d/Dalsa1.civ.mproj
-      - ESTUARY5_160714/ESTUARY5d/Dalsa1.civ.mproj.stat
-      - ESTUARY5_160714/ESTUARY5d/Dalsa2.civ4.mproj
-      - ESTUARY5_160714/ESTUARY5d/Dalsa2.civ4.mproj.stat
-      - ESTUARY5_160714/ESTUARY5e/Dalsa1.civ.mproj
-      - ESTUARY5_160714/ESTUARY5e/Dalsa1.civ.mproj.stat
-      - ESTUARY5_160714/ESTUARY5e/Dalsa2.civ4.mproj
-      - ESTUARY5_160714/ESTUARY5e/Dalsa2.civ4.mproj.stat
-      - ESTUARY5_160714/ESTUARY5f/Dalsa1.civ.mproj
-      - ESTUARY5_160714/ESTUARY5f/Dalsa1.civ.mproj.stat
-      - ESTUARY5_160714/ESTUARY5f/Dalsa2.civ4.mproj
-      - ESTUARY5_160714/ESTUARY5f/Dalsa2.civ4.mproj.stat
-      - ESTUARY5_160714/ESTUARY5g/Dalsa1.civ.mproj
-      - ESTUARY5_160714/ESTUARY5g/Dalsa1.civ.mproj.stat
-      - ESTUARY5_160714/ESTUARY5g/Dalsa2.civ4.mproj
-      - ESTUARY5_160714/ESTUARY5g/Dalsa2.civ4.mproj.stat
-      - ESTUARY5_160714/ESTUARY5a/Dalsa1.mproj
-      - ESTUARY5_160714/ESTUARY5a/Dalsa1.civ-Dalsa1.mproj
-      - ESTUARY5_160714/ESTUARY5a/Dalsa1.civ.mproj
-      - ESTUARY5_160714/ESTUARY5a/Dalsa1.civ.mproj.stat
-      - ESTUARY5_160714/ESTUARY5a/Dalsa2.civ4.mproj
-      - ESTUARY5_160714/ESTUARY5a/Dalsa2.civ4.mproj.stat
-      - ESTUARY6_170714/ESTUARY6g/Dalsa1.civ.mproj
-      - ESTUARY6_170714/ESTUARY6g/Dalsa1.civ.mproj.stat
-      - ESTUARY6_170714/ESTUARY6g/Dalsa2.civ.mproj
-      - ESTUARY6_170714/ESTUARY6g/Dalsa2.civ.mproj.stat
-      - ESTUARY6_170714/ESTUARY6g/Dalsa2.civ4.mproj
-      - ESTUARY6_170714/ESTUARY6g/Dalsa2.civ4.mproj.stat
-      - ESTUARY6_170714/ESTUARY6f/Dalsa1.civ.mproj
-      - ESTUARY6_170714/ESTUARY6f/Dalsa1.civ.mproj.stat
-      - ESTUARY6_170714/ESTUARY6f/Dalsa2.civ4.mproj
-      - ESTUARY6_170714/ESTUARY6f/Dalsa2.civ4.mproj.stat
-      - ESTUARY6_170714/ESTUARY6e/Dalsa1.civ.mproj
-      - ESTUARY6_170714/ESTUARY6e/Dalsa1.civ.mproj.stat
-      - ESTUARY6_170714/ESTUARY6e/Dalsa2.civ4.mproj
-      - ESTUARY6_170714/ESTUARY6e/Dalsa2.civ4.mproj.stat
-      - ESTUARY6_170714/ESTUARY6d/Dalsa1.civ.mproj
-      - ESTUARY6_170714/ESTUARY6d/Dalsa1.civ.mproj.stat
-      - ESTUARY6_170714/ESTUARY6c/Dalsa1.civ.mproj
-      - ESTUARY6_170714/ESTUARY6c/Dalsa1.civ.mproj.stat
-      - ESTUARY6_170714/ESTUARY6c/Dalsa2.civ4.mproj
-      - ESTUARY6_170714/ESTUARY6c/Dalsa2.civ4.mproj.stat
-      - ESTUARY6_170714/ESTUARY6b/Dalsa1.civ.mproj
-      - ESTUARY6_170714/ESTUARY6b/Dalsa1.civ.mproj.stat
-      - ESTUARY6_170714/ESTUARY6b/Dalsa2.civ4.mproj
-      - ESTUARY6_170714/ESTUARY6b/Dalsa2.civ4.mproj.stat
-      - ESTUARY6_170714/ESTUARY6a/Dalsa1.civ.mproj
-      - ESTUARY6_170714/ESTUARY6a/Dalsa1.civ.mproj.stat
-      - ESTUARY6_170714/ESTUARY6a/Dalsa2.civ4.mproj
-      - ESTUARY6_170714/ESTUARY6a/Dalsa2.civ4.mproj.stat
-      - ESTUARY7_170714/ESTUARY7g/Dalsa1.civ.mproj
-      - ESTUARY7_170714/ESTUARY7g/Dalsa1.civ.mproj.stat
-      - ESTUARY7_170714/ESTUARY7g/Dalsa2.civ4.mproj
-      - ESTUARY7_170714/ESTUARY7g/Dalsa2.civ4.mproj.stat
-      - ESTUARY7_170714/ESTUARY7f/Dalsa1.civ.mproj
-      - ESTUARY7_170714/ESTUARY7f/Dalsa1.civ.mproj.stat
-      - ESTUARY7_170714/ESTUARY7f/Dalsa2.civ.mproj
-      - ESTUARY7_170714/ESTUARY7f/Dalsa2.civ4.mproj
-      - ESTUARY7_170714/ESTUARY7f/Dalsa2.civ4.mproj.stat
-      - ESTUARY7_170714/ESTUARY7e/Dalsa1.civ.mproj
-      - ESTUARY7_170714/ESTUARY7e/Dalsa1.civ.mproj.stat
-      - ESTUARY7_170714/ESTUARY7e/Dalsa2.civ4.mproj
-      - ESTUARY7_170714/ESTUARY7e/Dalsa2.civ4.mproj.stat
-      - ESTUARY7_170714/ESTUARY7d/Dalsa1.civ.mproj
-      - ESTUARY7_170714/ESTUARY7d/Dalsa1.civ.mproj.stat
-      - ESTUARY7_170714/ESTUARY7d/Dalsa2.civ4.mproj
-      - ESTUARY7_170714/ESTUARY7d/Dalsa2.civ4.mproj.stat
-      - ESTUARY7_170714/ESTUARY7b/Dalsa1.civ.mproj
-      - ESTUARY7_170714/ESTUARY7b/Dalsa1.civ.mproj.stat
-      - ESTUARY7_170714/ESTUARY7b/Dalsa2.civ4.mproj
-      - ESTUARY7_170714/ESTUARY7b/Dalsa2.civ4.mproj.stat
-      - ESTUARY7_170714/ESTUARY7a/Dalsa1.civ_1.mproj
-      - ESTUARY7_170714/ESTUARY7a/Dalsa1.civ.mproj
-      - ESTUARY7_170714/ESTUARY7a/Dalsa1.civ.mproj.stat
-      - ESTUARY7_170714/ESTUARY7a/Dalsa2.civ4.mproj
-      - ESTUARY7_170714/ESTUARY7a/Dalsa2.civ4.mproj.stat
-      - ESTUARY7_170714/ESTUARY7c/Dalsa1.civ.mproj
-      - ESTUARY7_170714/ESTUARY7c/Dalsa1.civ.mproj.stat
-      - ESTUARY7_170714/ESTUARY7c/Dalsa2.civ4.mproj
-      - ESTUARY7_170714/ESTUARY7c/Dalsa2.civ4.mproj.stat
       - ESTUARY2_150714/ProbesNetcdf
       - ESTUARY3_160714/ProbesNetcdf
       - ESTUARY4_160714/ProbesNetcdf
