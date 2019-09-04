@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.2.0');
+use version; our $VERSION = version->declare('0.2.1');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -24,7 +24,7 @@ my %CMD_DB = (
    'check'                 => \&cmd_check,
    'dap-publish'           => \&cmd_dap_publish,
    'dap-unpublish'         => \&cmd_dap_unpublish,
-   'dataset-list'          => \&cmd_dataset_list
+   'dataset-list'          => \&cmd_dataset_list,
    'dataset-size'          => \&cmd_dataset_size,
    'make-zip'              => \&cmd_make_zip,
    'make-allfiles'         => \&cmd_make_allfiles,
@@ -136,7 +136,7 @@ project-meta - opendata project metafile manager
  project-meta dap-unpublish
  project-meta dataset-list
  project-meta dataset-size [--verbose|-v] [--dataset|-d dataset]
- project-meta make-zip
+ project-meta make-zip [--verbose|-v] [--dataset|-d dataset]
  project-meta make-allfiles
  project-meta list-license
  project-meta make-file-license
@@ -300,11 +300,29 @@ sub cmd_dataset_size {
    }
 
 ################################################################
+
 sub cmd_make_zip {
+   local @ARGV = @_;
+   my ($verbose, $dataset_name);
+
+   Getopt::Long::GetOptions(
+      'verbose'        => \$verbose,
+      'dataset|d=s'    => \$dataset_name,
+      );
+
    my $meta = load_metadata();
    my $current_dir = Cwd::getcwd();
-   my $data_set    = $meta->{'public-dap'}{'data-set'};
-   my $acronym     = $meta->{'project'}{'identifier'}{'acronym'};
+   my $data_set = $meta->{'public-dap'}{'data-set'};
+   if ($dataset_name) {
+      if (exists $meta->{'public-dap'}{'data-set'}{$dataset_name}) {
+         $data_set = $meta->{'public-dap'}{'data-set'}{$dataset_name};
+         }
+      else {
+         die "Error, dataset $dataset_name does'nt exists\n";
+         }
+      }
+
+   my $acronym = $meta->{'project'}{'identifier'}{'acronym'};
 
    push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENSE.txt';
    {
@@ -337,7 +355,10 @@ sub cmd_make_zip {
    my $date = sprintf '%04i%02i%02i-%02i%02i', $year, $mon, $mday, $hour, $min;
 
    # Save the Zip file
-   unless ($zip->writeToFileNamed("$current_dir/$acronym--$date.zip") == AZ_OK) {
+   my $zipname = "$acronym";
+   $zipname .= "-$dataset_name" if $dataset_name;
+   $zipname .= "--$date";
+   unless ($zip->writeToFileNamed("$current_dir/$zipname.zip") == AZ_OK) {
       die 'Error: zip write error';
       }
    }
@@ -507,7 +528,7 @@ project-meta - opendata project metafile manager
  project-meta dap-unpublish
  project-meta dataset-list
  project-meta dataset-size [--verbose|-v] [--dataset|-d dataset]
- project-meta make-zip
+ project-meta make-zip [--verbose|-v] [--dataset|-d dataset]
  project-meta list-license
  project-meta make-file-license
  project-meta make-file-author
@@ -590,7 +611,7 @@ Please verify the returned values before excuted it with the C<-delete> option.
 
 =head2 make-zip
 
- project-meta make-zip
+ project-meta make-zip [--verbose|-v] [--dataset|-d dataset]
 
 Create a ZIP archive with the open data set.
 Files F<AUTHORS.txt>, F<LICENSE.txt> and F<COPYRIGHT.txt> are mandatory but could be generated (see below).
