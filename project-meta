@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.1.9');
+use version; our $VERSION = version->declare('0.2.0');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -18,18 +18,13 @@ use Archive::Zip qw(:ERROR_CODES :CONSTANTS);
 
 our $CFG_VERSION = 2;
 
-my ($verbose);
-Getopt::Long::GetOptions(
-   'verbose' => \$verbose,
-   );
-
-
 my %CMD_DB = (
    'help'                  => \&cmd_help,
    'version'               => \&cmd_version,
    'check'                 => \&cmd_check,
    'dap-publish'           => \&cmd_dap_publish,
    'dap-unpublish'         => \&cmd_dap_unpublish,
+   'dataset-list'          => \&cmd_dataset_list
    'dataset-size'          => \&cmd_dataset_size,
    'make-zip'              => \&cmd_make_zip,
    'make-allfiles'         => \&cmd_make_allfiles,
@@ -139,7 +134,8 @@ project-meta - opendata project metafile manager
  project-meta check
  project-meta dap-publish
  project-meta dap-unpublish
- project-meta dataset-size
+ project-meta dataset-list
+ project-meta dataset-size [--verbose|-v] [--dataset|-d dataset]
  project-meta make-zip
  project-meta make-allfiles
  project-meta list-license
@@ -253,9 +249,45 @@ sub cmd_dap_unpublish {
 
 ################################################################
 
+sub cmd_dataset_list {
+   local @ARGV = @_;
+
+   my $meta = load_metadata();
+
+   die "Error: no dataset\n"
+      if not defined $meta->{'public-dap'}
+      or not defined $meta->{'public-dap'}{'data-set'};
+
+   my $data_set = $meta->{'public-dap'}{'data-set'};
+   if(ref($data_set) eq 'HASH') {
+      print "$_\n" for sort keys %{$data_set};
+      }
+   else {
+      print "default uname dataset\n";
+      }
+   }
+
+################################################################
+
 sub cmd_dataset_size {
+   local @ARGV = @_;
+   my ($verbose, $dataset_name);
+
+   Getopt::Long::GetOptions(
+      'verbose'        => \$verbose,
+      'dataset|d=s'    => \$dataset_name,
+      );
+
    my $meta = load_metadata();
    my $data_set = $meta->{'public-dap'}{'data-set'};
+   if ($dataset_name) {
+      if (exists $meta->{'public-dap'}{'data-set'}{$dataset_name}) {
+         $data_set = $meta->{'public-dap'}{'data-set'}{$dataset_name};
+         }
+      else {
+         die "Error, dataset $dataset_name does'nt exists\n";
+         }
+      }
    my $total;
    for my $dataset (@{$data_set}) {
       my $cmd = qx{du -sm $dataset};
@@ -473,7 +505,8 @@ project-meta - opendata project metafile manager
  project-meta check
  project-meta dap-publish
  project-meta dap-unpublish
- project-meta dataset-size
+ project-meta dataset-list
+ project-meta dataset-size [--verbose|-v] [--dataset|-d dataset]
  project-meta make-zip
  project-meta list-license
  project-meta make-file-license
@@ -547,9 +580,13 @@ we use here the command C<find> limited to folder and link.
 
 Please verify the returned values before excuted it with the C<-delete> option.
 
+=head2 dataset-list
+
+ project-meta dataset-list
+
 =head2 dataset-size
 
- project-meta dataset-size
+ project-meta dataset-size [--verbose|-v] [--dataset|-d dataset]
 
 =head2 make-zip
 
