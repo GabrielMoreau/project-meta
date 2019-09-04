@@ -773,7 +773,7 @@ Own project ressources:
 
 =head1 AUTHOR
 
-Written by Gabriel Moreau, LEGI UMR5519, CNRS, Grenoble - France
+Written by Gabriel Moreau <Gabriel.Moreau(A)univ-grenoble-alpes.fr>
 
 
 =head1 SPECIAL THANKS
@@ -791,4 +791,4 @@ Joel Sommeria, Julien Chauchat, Cyrille Bonamy, Antoine Mathieu.
 
 License GNU GPL version 2 or later and Perl equivalent
 
-Copyright (C) 2017-2018 Gabriel Moreau <Gabriel.Moreau(A)univ-grenoble-alpes.fr>.
+Copyright (C) 2017-2019, LEGI UMR 5519 / CNRS UGA G-INP, Grenoble, France
