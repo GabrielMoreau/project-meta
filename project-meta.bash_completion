@@ -8,6 +8,20 @@ _project-meta() {
    cur="${COMP_WORDS[COMP_CWORD]}"
    prev="${COMP_WORDS[COMP_CWORD-1]}"
 
+   case $prev in
+      -d|--dataset)
+         local showlist=$(project-meta dataset-list|awk '{print $1}')
+         COMPREPLY=($(compgen -W "${showlist}" -- "$cur"))
+         return 0
+         ;;
+
+      help)
+         local showlist=$(project-meta help|grep '^ project-meta'|awk '{print $2}')
+         COMPREPLY=($(compgen -W "${showlist}" -- "$cur"))
+         return 0
+         ;;
+   esac
+
    if [[ "$cur" == '-*' || $COMP_CWORD -gt 1 ]]
    then
       COMPREPLY=($(compgen -W "$(project-meta  help|grep "^ project-meta ${COMP_WORDS[1]}" | sed -e 's/[\[]/\n/g;'|grep -- '^-'|cut -f 1 -d ']'|cut -f 1 -d ' '|sed -e 's/|/ /g;'|xargs echo -n)" -- "$cur"))
