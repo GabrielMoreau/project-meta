@@ -1,3 +1,5 @@
+SHELL:=/bin/bash
+
 DESTDIR=
 
 BINDIR=/usr/bin
@@ -6,7 +8,7 @@ SHAREDIR=/usr/share/project-meta
 ETCDIR=/etc/project-meta
 COMPDIR=/etc/bash_completion.d
 
-.PHONY: all ignore install update sync upload stat help pkg
+.PHONY: all ignore install update sync upload stat help pkg pages
 
 all:
 	pod2man project-meta | gzip > project-meta.1.gz
@@ -39,6 +41,17 @@ upload:
 
 pkg: all
 	./make-package-debian
+
+pages: all pkg
+	mkdir -p public/download
+	cp -p *.html                  public/
+	cp -p LICENSE.txt             public/
+	cp -p PROJECT-META.sample.yml public/
+	cp -p --no-clobber project-meta_*_all.deb  public/download/
+	cd public; ln -sf project-meta.html index.html
+	echo '<html><body><h1>Project-Meta Debian Package</h1><ul>' > public/download/index.html
+	(cd public/download; while read file; do printf '<li><a href="%s">%s</a> (%s)</li>\n' $$file $$file $$(stat -c %y $$file | cut -f 1 -d ' '); done < <(ls -1t *.deb) >> index.html)
+	echo '</ul></body></html>' >> public/download/index.html
 
 stat:
 	svn log|egrep '^r[[:digit:]]'|egrep -v '^r1[[:space:]]'|awk '{print $$3}'|sort|uniq -c                 |gnuplot -p -e 'set style fill solid 1.00 border 0; set style histogram; set style data histogram; set xtics rotate by 0; set style line 7 linetype 0 linecolor rgb "#222222"; set grid ytics linestyle 7; set xlabel "User contributor" font "bold"; set ylabel "Number of commit" font "bold"; plot "/dev/stdin" using 1:xticlabels(2) title "commit" linecolor rgb "#666666"'
