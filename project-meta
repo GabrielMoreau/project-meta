@@ -776,7 +776,7 @@ The file is in YAML format because this is a human-readable text file style.
 Other formats could have been Plain XML, RDF, JSON... but they are much less readable.
 
 You can find in the project-meta software a
-L<PROJECT-META.sample.yml|http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/PROJECT-META.sample.yml> example.
+L<PROJECT-META.sample.yml|https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/PROJECT-META.sample.yml> example.
 This one is actually the master reference specification!
 
 Some interresting papers or links about Open Meta Data Schema:
@@ -822,11 +822,11 @@ Own project ressources:
 
 =over
 
-=item * L<Web site|http://servforge.legi.grenoble-inp.fr/projects/soft-trokata/wiki/SoftWare/ProjectMeta>
+=item * L<Web site|https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta>
 
-=item * L<Online Manual|http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/project-meta.html>
+=item * L<Online Manual|https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/project-meta.html>
 
-=item * L<SVN repository|http://servforge.legi.grenoble-inp.fr/svn/soft-trokata/trunk/project-meta>
+=item * L<Debian Package|https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/download/>
 
 =back
 
