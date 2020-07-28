@@ -37,30 +37,30 @@ using UNIX commands, scripts in Perl and C++.
 The first step is to make a list of the data folders to display.
 This list needs to be introduced in a text file,
 complemented by some information about the authors of the work and about related publications.
-This text file must be put in your current folder with the name {{{PROJECT-META.yml}}}.
+This text file must be put in your current folder with the name ```PROJECT-META.yml```.
 The text structure must follow some simple rules consisting in the YAML format.
 An example could be found in the Project-Meta repository or online
 [PROJECT-META.sample.yml](https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta/-/blob/master/PROJECT-META.sample.yml).
-{{{
+```bash
 project-meta help
 man project-meta
-}}}
+```
 
 
-## {{{PROJECT-META.yml}}} meta file
+## ```PROJECT-META.yml``` meta file
 
 This file is at the core of the procedure.
 A first task is to list the data folder to publish.
 For that purpose a good practice is to organise the data and the procedures of analysis
 such that the final data to publish are contained in folders named with specific extensions.
 Then search tools can be used to list all the selected folders.
-For instance the following unix command lists all the folders with extension {{{*.mproj*}}}
-and append it to the file {{{PROJECT-META.yml}}} (and creates the file if it does not exist yet):
-{{{
+For instance the following unix command lists all the folders with extension ```*.mproj*```
+and append it to the file ```PROJECT-META.yml``` (and creates the file if it does not exist yet):
+```bash
 find . -name '*.mproj*' -a -type d | sed 's/^/    - /;' >> PROJECT-META.yml
-}}}
-The `find` command only search the folders with the right extension (recursively)  under the current one (.)
-and the `sed` command add 4 spaces and the dash at the beginning of each line in order to respect the YAML format.
+```
+The ```find``` command only search the folders with the right extension (recursively)  under the current one (.)
+and the ```sed``` command add 4 spaces and the dash at the beginning of each line in order to respect the YAML format.
 
 The YAML file has to be complemented by general information about the authors and the related publications,
 following the template [PROJECT-META.sample.yml](https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta/-/blob/master/PROJECT-META.sample.yml).
@@ -73,9 +73,9 @@ Debian (and certainly Ubuntu) package for amd64 arch could be download on: http:
 
 You can then install it with
 
-{{{
+```bash
 sudo dpkg -i project-meta_*_amd64.deb
-}}}
+```
 (just replace * with the version you have donwloaded).
 
 
@@ -92,13 +92,13 @@ The sources are managed via Git (GitLab).
 It is very easy to stay synchronized with these sources
 
  * initial recovery
-{{{
+```bash
 git clone https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta.git
-}}}
+```
  * the updates thereafter
-{{{
+```bash
 git pull
-}}}
+```
 
 It is possible to have access to writing at the forge on reasoned request to [mailto:Gabriel.Moreau(A)legi.grenoble-inp.fr Gabriel Moreau].
 For issues of administration time and security, the forge is not writable without permission.
@@ -107,10 +107,10 @@ For the issues of decentralization of the web, autonomy and non-allegiance to th
 You can propose an email patch of a particular file via the ```diff``` command.
 Note that ```svn``` defaults to the unified format (```-u```).
 Two examples:
-{{{
+```bash
 diff -u project-meta.org project-meta.new > project-meta.patch
-}}}
+```
 We apply the patch (after having read and read it again) via the command
-{{{
+```bash
 patch -p0 < project-meta.patch
-}}}
+```
