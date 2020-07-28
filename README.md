@@ -31,7 +31,7 @@ We choose the NetCDF format which is sufficient for most experimental data and c
 ## Description
 
 The creation of the OpenDAP repository is done
-by the script [project-meta](https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta/-/blob/master/project-meta)
+by the script [project-meta](https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/)
 using UNIX commands, scripts in Perl and C++.
 
 The first step is to make a list of the data folders to display.
@@ -40,7 +40,7 @@ complemented by some information about the authors of the work and about related
 This text file must be put in your current folder with the name ```PROJECT-META.yml```.
 The text structure must follow some simple rules consisting in the YAML format.
 An example could be found in the Project-Meta repository or online
-[PROJECT-META.sample.yml](https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta/-/blob/master/PROJECT-META.sample.yml).
+[PROJECT-META.sample.yml](https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/PROJECT-META.sample.yml).
 ```bash
 project-meta help
 man project-meta
@@ -63,13 +63,13 @@ The ```find``` command only search the folders with the right extension (recursi
 and the ```sed``` command add 4 spaces and the dash at the beginning of each line in order to respect the YAML format.
 
 The YAML file has to be complemented by general information about the authors and the related publications,
-following the template [PROJECT-META.sample.yml](https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta/-/blob/master/PROJECT-META.sample.yml).
+following the template [PROJECT-META.sample.yml](https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/PROJECT-META.sample.yml).
 
 
 ## Debian package
 
 Debian is a GNU/Linux distribution.
-Debian (and certainly Ubuntu) package for amd64 arch could be download on: http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download.
+Debian (and certainly Ubuntu) package for amd64 arch could be downloaded on: (https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/download.
 
 You can then install it with
 
@@ -100,7 +100,7 @@ git clone https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project
 git pull
 ```
 
-It is possible to have access to writing at the forge on reasoned request to [mailto:Gabriel.Moreau(A)legi.grenoble-inp.fr Gabriel Moreau].
+It is possible to have access to writing at the forge on reasoned request to [Gabriel Moreau](mailto:Gabriel.Moreau(A)legi.grenoble-inp.fr).
 For issues of administration time and security, the forge is not writable without permission.
 For the issues of decentralization of the web, autonomy and non-allegiance to the ambient (and North American) centralism, we use our own forge...
 
