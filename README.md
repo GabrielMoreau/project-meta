@@ -69,7 +69,7 @@ following the template [PROJECT-META.sample.yml](https://legi.gricad-pages.univ-
 ## Debian package
 
 Debian is a GNU/Linux distribution.
-Debian (and certainly Ubuntu) package for amd64 arch could be downloaded on: (https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/download.
+Debian (and certainly Ubuntu) package for amd64 arch could be downloaded on: https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/download.
 
 You can then install it with
 
