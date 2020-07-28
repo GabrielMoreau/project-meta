@@ -12,7 +12,7 @@ COMPDIR=/etc/bash_completion.d
 
 all:
 	pod2man project-meta | gzip > project-meta.1.gz
-	pod2html project-meta > project-meta.html
+	pod2html --css podstyle.css --index --header project-meta > project-meta.html
 
 install: update
 
@@ -45,6 +45,7 @@ pkg: all
 pages: all pkg
 	mkdir -p public/download
 	cp -p *.html                  public/
+	cp -p podstyle.css            public/
 	cp -p LICENSE.txt             public/
 	cp -p PROJECT-META.sample.yml public/
 	cp -p --no-clobber project-meta_*_all.deb  public/download/
