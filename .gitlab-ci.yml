@@ -11,11 +11,11 @@ pages:
     - mkdir -p public/download
     - $(wget --no-check-certificate ${CI_PAGES_URL}/download.tar.gz -O download.tar.gz || exit 0)
     - '[ -s download.tar.gz ] && tar -xzf download.tar.gz public/download/'
-    - '[ -s project-meta_0.0.7-2_amd64.deb ]  && (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.0.7-2_amd64.deb  || exit 0)'
-    - '[ -s project-meta_0.0.8-1_amd64.deb ]  && (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.0.8-1_amd64.deb  || exit 0)'
-    - '[ -s project-meta_0.0.10-1_amd64.deb ] && (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.0.10-1_amd64.deb || exit 0)'
-    - '[ -s project-meta_0.0.11-1_amd64.deb ] && (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.0.11-1_amd64.deb || exit 0)'
-    - '[ -s project-meta_0.1.5-3_all.deb ]    && (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.1.5-3_all.deb    || exit 0)'
+    - '[ -s project-meta_0.0.7-2_amd64.deb ]  || (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.0.7-2_amd64.deb  || exit 0)'
+    - '[ -s project-meta_0.0.8-1_amd64.deb ]  || (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.0.8-1_amd64.deb  || exit 0)'
+    - '[ -s project-meta_0.0.10-1_amd64.deb ] || (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.0.10-1_amd64.deb || exit 0)'
+    - '[ -s project-meta_0.0.11-1_amd64.deb ] || (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.0.11-1_amd64.deb || exit 0)'
+    - '[ -s project-meta_0.1.5-3_all.deb ]    || (cd public/download; wget http://servforge.legi.grenoble-inp.fr/pub/soft-trokata/project-meta/download/project-meta_0.1.5-3_all.deb    || exit 0)'
     - make pages
     - tar -czf public/download.tar.gz public/download/
   artifacts:
