@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.2.5');
+use version; our $VERSION = version->declare('0.2.6');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -145,7 +145,7 @@ project-meta - opendata project metafile manager
  project-meta help
  project-meta version
  project-meta check
- project-meta dap-publish [--verbose|-v] [--dataset|-d dataset]
+ project-meta dap-publish [--verbose|-v] [--dataset|-d dataset] [--force|-f]
  project-meta dap-unpublish [--verbose|-v] [--dataset|-d dataset]
  project-meta dataset-list
  project-meta dataset-size [--verbose|-v] [--dataset|-d dataset]
@@ -213,15 +213,20 @@ sub cmd_check {
 
 sub cmd_dap_publish {
    local @ARGV = @_;
-   my ($verbose, $dataset_name);
+   my ($verbose, $dataset_name, $force);
 
    Getopt::Long::GetOptions(
       'verbose'        => \$verbose,
       'dataset|d=s'    => \$dataset_name,
+      'force|f'        => \$force,
       );
 
    my $meta = load_metadata();
    my $current_dir = Cwd::getcwd();
+   if ($current_dir =~ m{^$ENV{'HOME'}} and not $force) {
+      die "Error, cannot publish data located under your HOME tree to the DAP server (HOME is private by default)\n";
+      }
+
    my $acronym     = $meta->{'project'}{'identifier'}{'acronym'};
    my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
    my $data_set    = $meta->{'public-dap'}{'data-set'};
@@ -584,7 +589,7 @@ project-meta - opendata project metafile manager
  project-meta help
  project-meta version
  project-meta check
- project-meta dap-publish [--verbose|-v] [--dataset|-d dataset]
+ project-meta dap-publish [--verbose|-v] [--dataset|-d dataset] [--force|-f]
  project-meta dap-unpublish [--verbose|-v] [--dataset|-d dataset]
  project-meta dataset-list
  project-meta dataset-size [--verbose|-v] [--dataset|-d dataset]
@@ -624,7 +629,7 @@ you can use C<yamllint> or C<ysh> commands to check just it's format.
 
 =head2 dap-publish
 
- project-meta dap-publish [--verbose|-v] [--dataset|-d dataset]
+ project-meta dap-publish [--verbose|-v] [--dataset|-d dataset] [--force|-f]
 
 Publish data on an OpeNDAP server.
 Because data can be very large,
@@ -645,10 +650,18 @@ The main keys use in the F<PROJECT-META.yml> are:
 
 Because this command could be dangerous, it does nothing!
 It print on terminal shell command to be done.
-You have to verify ouput before eval it.
+You have to verify ouput before eval it (pipe to C<bash>).
 
   project-meta dap-publish
   project-meta dap-publish | bash
+
+By default, it is not possible to publish data under your HOME.
+Indeed, the HOME is personal and data cannot be shared
+in order to comply with personal data rights (GDPR).
+You must first position yourself on a shared data space that will be accessible to all users
+(the data you publish will be public).
+You can use the C<--force> option to force publication under a personal folder.
+However, there's a good chance that this won't work!
 
 =head2 dap-unpublish
 
@@ -851,4 +864,4 @@ Joel Sommeria, Julien Chauchat, Cyrille Bonamy, Antoine Mathieu.
 
 License GNU GPL version 2 or later and Perl equivalent
 
-Copyright (C) 2017-2019, LEGI UMR 5519 / CNRS UGA G-INP, Grenoble, France
+Copyright (C) 2017-2023, LEGI UMR 5519 / CNRS UGA G-INP, Grenoble, France
