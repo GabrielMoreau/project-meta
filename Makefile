@@ -8,11 +8,14 @@ SHAREDIR=/usr/share/project-meta
 ETCDIR=/etc/project-meta
 COMPDIR=/etc/bash_completion.d
 
-.PHONY: all ignore install update sync upload stat help pkg pages
+.PHONY: all clean ignore install update sync upload stat help pkg pages
 
 all:
 	pod2man project-meta | gzip > project-meta.1.gz
 	pod2html --css podstyle.css --index --header project-meta > project-meta.html
+
+clean:
+	rm -r *.gz *.html *.deb *.tmp public
 
 install: update
 
