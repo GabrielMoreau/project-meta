@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.2.6');
+use version; our $VERSION = version->declare('0.2.7');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -125,7 +125,7 @@ sub load_metadata {
       &{$upgrade}($meta);
       $initial_version = $CFG_VERSION;
       }
-   elsif ($initial_version < $CFG_VERSION) {
+   elsif ($initial_version > $CFG_VERSION) {
       die "Error: config file at future version $meta->{'version'}, program only at $CFG_VERSION\n"
       }
 
@@ -241,7 +241,7 @@ sub cmd_dap_publish {
 
    push @{$data_set}, 'AUTHORS.txt', 'COPYRIGHT.txt', 'LICENSE.txt';
    {
-      # Remove doublon
+      # Removes duplicates
       my %seen = ();
       @{$data_set} = grep { ! $seen{$_}++ } @{$data_set};
       }
@@ -252,30 +252,35 @@ sub cmd_dap_publish {
       addfolder2list(\%folders, $dataset);
       }
 
+   print "# fix main folders\n";
    print "chmod o+rX,o-w '$current_dir'\n";
    print "mkdir -p '$dap_folder/$acronym'\n" if not -d "$dap_folder/$acronym";
    if ($dataset_name) {
       $acronym .= "/$dataset_name";
       print "mkdir -p '$dap_folder/$acronym'\n" if not -d "$dap_folder/$acronym";
       }
+   print "# fix subfolders\n";
    for my $folder (sort keys %folders) {
       print "chmod o+rX,o-w '$current_dir/$folder'\n";
       print "mkdir '$dap_folder/$acronym/$folder'\n" if -d "$current_dir/$folder";
       }
 
+   print "# fix data files\n";
    for my $dataset (@{$data_set}) {
       if ($dataset =~ m{/}) {
-         # sub-folder case
+         # Sub-folder case
          my $folder = $dataset =~ s{/[^/]+$}{}r;
          print "chmod -R o+rX,o-w '$current_dir/$dataset'\n";
          print "ln --symbolic --target-directory '$dap_folder/$acronym/$folder/' '$current_dir/$dataset'\n";
          }
       else {
          # Root case
+         print "chmod -R o+rX,o-w '$current_dir/$dataset'\n";
          print "ln --symbolic --target-directory '$dap_folder/$acronym/' '$current_dir/$dataset'\n";
          }
 
       }
+   print "# fix right on links\n";
    print "chmod -R o+rX,o-w '$dap_folder/$acronym/'\n";
    }
 
