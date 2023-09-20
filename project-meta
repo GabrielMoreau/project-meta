@@ -282,6 +282,7 @@ sub cmd_dap_publish {
       }
    print "# fix right on links\n";
    print "chmod -R o+rX,o-w '$dap_folder/$acronym/'\n";
+   print "# pipe this result to bash for execution (| bash)\n";
    }
 
 #---------------------------------------------------------------
