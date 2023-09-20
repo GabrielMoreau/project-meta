@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.2.9');
+use version; our $VERSION = version->declare('0.2.10');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -15,6 +15,7 @@ use Getopt::Long();
 use Cwd();
 use Template;
 use Archive::Zip qw(:ERROR_CODES :CONSTANTS);
+use Fcntl();
 
 our $CFG_VERSION = 2;
 
@@ -132,6 +133,17 @@ sub load_metadata {
    return wantarray ? ($meta, $initial_version) : $meta;
    }
 
+
+#---------------------------------------------------------------
+
+sub die_if_not_readable_root_folder {
+   my $root_folder = shift;
+   
+   my $mode = (stat($root_folder))[2];
+   die "Error, $root_folder not readable by other\n"           if not ($mode & Fcntl::S_IROTH and $mode & Fcntl::S_IXOTH);
+   die "Error, $root_folder writable by other, to dangerous\n" if $mode & Fcntl::S_IWOTH;
+}
+
 ################################################################
 # command
 ################################################################
@@ -223,10 +235,10 @@ sub cmd_dap_publish {
 
    my $meta = load_metadata();
    my $current_dir  = Cwd::getcwd();
-   my $current_dir2 = Cwd::cwd(); # If current dir is a link, more test...
-   if ($current_dir =~ m{^$ENV{'HOME'}} and $current_dir2 =~ m{^$ENV{'HOME'}} and not $force) {
+   if (($current_dir =~ m{^$ENV{'HOME'}} or $ENV{'PWD'} =~ m{^$ENV{'HOME'}}) and not $force) {
       die "Error, cannot publish data located under your HOME tree to the DAP server (HOME is private by default)\n";
       }
+   die_if_not_readable_root_folder $current_dir;
 
    my $acronym     = $meta->{'project'}{'identifier'}{'acronym'};
    my $dap_folder  = $meta->{'public-dap'}{'dap-folder'};
@@ -268,10 +280,12 @@ sub cmd_dap_publish {
 
    print "# fix data files\n";
    for my $dataset (@{$data_set}) {
+      my $opt = '';
+      $opt = '-R' if -d "$current_dir/$dataset";
+      print "chmod $opt o+rX,o-w '$current_dir/$dataset'\n";
       if ($dataset =~ m{/}) {
          # Sub-folder case
          my $folder = $dataset =~ s{/[^/]+$}{}r;
-         print "chmod -R o+rX,o-w '$current_dir/$dataset'\n";
          print "ln --symbolic --target-directory '$dap_folder/$acronym/$folder/' '$current_dir/$dataset'\n";
          }
       else {
@@ -280,7 +294,7 @@ sub cmd_dap_publish {
          }
 
       }
-   print "# fix right on links\n";
+   print "# fix right on DAP links\n";
    print "chmod -R o+rX,o-w '$dap_folder/$acronym/'\n";
    print "# verify, take care and then pipe this result to bash for execution (| bash)\n";
    }
