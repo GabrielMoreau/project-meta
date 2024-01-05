@@ -1,4 +1,4 @@
-# SoftWare / ProjectMeta - Meta project for Open Data management
+# Project-Meta - Meta project for Open Data management
 
 Note: The master Git repository in on the [GRICAD Gitlab](https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta).
 Other Git repository are mirror or fork.
@@ -16,6 +16,10 @@ In addition to these general requests, we aim at achieving the following goals:
 
 This [document](doc/OpenDAP_GM.pdf) describes the wider motivation of the project. 
 
+Other references:
+* 2022 - [20 ans de science ouverte au laboratoire LEGI : Quels succès ? Quelles difficultés ? Quels enseignements ? Un tremplin vers le futur](https://hal.science/hal-03608867) [french]
+* 2018 - [OpenData pour la simulation et les expérimentations au LEGI](https://hal.science/hal-01939712) [french]
+* 2016 - [Cycle de vie des données : exemple et application](Cycle de vie des données : exemple et application) [french]
 
 ## OPeNDAP
 
