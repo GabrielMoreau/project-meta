@@ -1,5 +1,8 @@
 # SoftWare / ProjectMeta - Meta project for Open Data management
 
+Note: The master Git repository in on the [GRICAD Gitlab](https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta).
+Other Git repository are mirror or fork.
+
 ## Aim
 
 Project-Meta is a software to help you to manage your open data, using the protocol OPeNDAP (DAP).
@@ -100,7 +103,7 @@ It is very easy to stay synchronized with these sources
    git pull
    ```
 
-It is possible to have access to writing at the forge on reasoned request to [Gabriel Moreau](mailto:Gabriel.Moreau(A)legi.grenoble-inp.fr).
+It is possible to have access to writing at the forge on reasoned request to [Gabriel Moreau](mailto:Gabriel.Moreau@univ-grenoble-alpes.fr).
 For issues of administration time and security, the forge is not writable without permission.
 For the issues of decentralization of the web, autonomy and non-allegiance to the ambient (and North American) centralism, we use our own forge...
 

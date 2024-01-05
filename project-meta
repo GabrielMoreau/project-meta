@@ -1,13 +1,13 @@
 #!/usr/bin/env perl
 #
-# 2018/01/17 Gabriel Moreau <Gabriel.Moreau(A)univ-grenoble-alpes.fr>
+# 2018/01/17 Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
 #
 # apt-get install libyaml-syck-perl libtemplate-perl libarchive-zip-perl
 # apt-get install yamllint libyaml-shell-perl # check YAML files
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.2.10');
+use version; our $VERSION = version->declare('0.2.11');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -855,7 +855,7 @@ Own project ressources:
 
 =over
 
-=item * L<Web site|https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta>
+=item * L<Web site (Gitlab)|https://gricad-gitlab.univ-grenoble-alpes.fr/legi/soft/trokata/project-meta>
 
 =item * L<Online Manual|https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/project-meta.html>
 
@@ -866,7 +866,7 @@ Own project ressources:
 
 =head1 AUTHOR
 
-Written by Gabriel Moreau <Gabriel.Moreau(A)univ-grenoble-alpes.fr>
+Written by Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
 
 
 =head1 SPECIAL THANKS
@@ -884,4 +884,4 @@ Joel Sommeria, Julien Chauchat, Cyrille Bonamy, Antoine Mathieu.
 
 License GNU GPL version 2 or later and Perl equivalent
 
-Copyright (C) 2017-2023, LEGI UMR 5519 / CNRS UGA G-INP, Grenoble, France
+Copyright (C) 2017-2024, LEGI UMR 5519 / CNRS UGA G-INP, Grenoble, France
