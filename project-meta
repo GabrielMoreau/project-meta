@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use version; our $VERSION = version->declare('0.2.11');
+use version; our $VERSION = version->declare('0.2.12');
 
 use File::Copy qw(copy);    
 use YAML::Syck;
@@ -812,9 +812,15 @@ You can find in the project-meta software a
 L<PROJECT-META.sample.yml|https://legi.gricad-pages.univ-grenoble-alpes.fr/soft/trokata/project-meta/PROJECT-META.sample.yml> example.
 This one is actually the master reference specification!
 
+However, Project-Meta now only uses version 2 of the specification.
+Since this version, we have been closely following the fifteen keywords of the Dublin Core Metadata Terms standard,
+in order to be as standard as possible with opendata best practices.
+
 Some interresting papers or links about Open Meta Data Schema:
 
 =over
+
+=item * L<Dublin Core|https://en.wikipedia.org/wiki/Dublin_Core> vocabulary, also known as the Dublin Core Metadata Terms (DCMT).
 
 =item * L<Metadata for the open data portals|http://devinit.org/wp-content/uploads/2018/01/Metadata-for-open-data-portals.pdf>
         writen in december 2016.
@@ -884,4 +890,4 @@ Joel Sommeria, Julien Chauchat, Cyrille Bonamy, Antoine Mathieu.
 
 License GNU GPL version 2 or later and Perl equivalent
 
-Copyright (C) 2017-2024, LEGI UMR 5519 / CNRS UGA G-INP, Grenoble, France
+Copyright (C) 2017-2025, LEGI UMR 5519 / CNRS UGA G-INP, Grenoble, France
